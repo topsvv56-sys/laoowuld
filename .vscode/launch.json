@@ -1,0 +1,33 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Next.js: Run (เปิดเว็บใน Chrome ทันที)",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}/lw-app",
+      "preLaunchTask": "Next.js: dev",
+      "skipFiles": [
+        "**/node_modules/**"
+      ]
+    },
+    {
+      "name": "Next.js: Run via Terminal (เปิดเบราว์เซอร์อัตโนมัติ)",
+      "type": "node-terminal",
+      "request": "launch",
+      "command": "npm run dev",
+      "cwd": "${workspaceFolder}/lw-app",
+      "skipFiles": [
+        "<node_internals>/**",
+        "**/node_modules/**",
+        "${workspaceFolder}/lw-app/node_modules/**"
+      ],
+      "serverReadyAction": {
+        "pattern": "- Local:.+(https?://.+)",
+        "uriFormat": "%s",
+        "action": "openExternally"
+      }
+    }
+  ]
+}
