@@ -2,14 +2,17 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Next.js: Run (เปิดเว็บใน Chrome ทันที)",
+      "name": "Next.js: Run (เปิดเว็บใน Chrome)",
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:3000",
       "webRoot": "${workspaceFolder}/lw-app",
       "preLaunchTask": "Next.js: dev",
       "skipFiles": [
-        "**/node_modules/**"
+        "**/node_modules/**",
+        "**/_next/**",
+        "**/turbopack*/**",
+        "<node_internals>/**"
       ]
     },
     {
@@ -21,6 +24,7 @@
       "skipFiles": [
         "<node_internals>/**",
         "**/node_modules/**",
+        "**/_next/**",
         "${workspaceFolder}/lw-app/node_modules/**"
       ],
       "serverReadyAction": {
