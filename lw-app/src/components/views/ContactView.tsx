@@ -28,22 +28,23 @@ export default function ContactView({
 
   const handleContactSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const name = contactName;
     setContactName("");
     setContactPhone("");
     setContactSubject("");
     setContactMessage("");
     showToast(
       currentLang === "lo"
-        ? `ຂໍຂອບໃຈທ່ານ ${contactName}! ທີມງານ HR ຈະຕິດຕໍ່ກັບໂດຍໄວ`
-        : `Thank you ${contactName}! Our recruitment team will reply shortly.`
+        ? `ຂໍຂອບໃຈທ່ານ ${name}! ທີມງານ HR ຈະຕິດຕໍ່ກັບໂດຍໄວ`
+        : `Thank you ${name}! Our recruitment team will reply shortly.`
     );
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full space-y-10">
+    <div className="py-10 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full space-y-10 animate-in fade-in duration-200">
       <div className="text-center space-y-2 max-w-2xl mx-auto">
-        <span className="px-3.5 py-1 bg-blue-100 text-lw-blue rounded-full text-xs font-bold uppercase tracking-wider">
-          Contact Recruitment Team
+        <span className="px-3.5 py-1 bg-blue-100 text-lw-blue rounded-full text-xs font-bold uppercase tracking-wider inline-block">
+          {t.contact_badge}
         </span>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
           {t.contact_title}
@@ -59,10 +60,10 @@ export default function ContactView({
           <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
             <PhoneCall className="w-5 h-5" />
           </div>
-          <h3 className="font-bold text-slate-900 text-sm">ສາຍດ່ວນ HR</h3>
+          <h3 className="font-bold text-slate-900 text-sm">{t.card_hotline_title}</h3>
           <p className="text-xs text-slate-600">021 415 555 / 020 5551 2345</p>
           <span className="text-[10px] text-slate-400 block">
-            ຈັນ - ສຸກ: 8:00 - 17:00
+            {t.card_hotline_sub}
           </span>
         </div>
 
@@ -70,10 +71,10 @@ export default function ContactView({
           <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
             <Mail className="w-5 h-5" />
           </div>
-          <h3 className="font-bold text-slate-900 text-sm">ອີເມວສັນຫາວຽກ</h3>
+          <h3 className="font-bold text-slate-900 text-sm">{t.card_email_title}</h3>
           <p className="text-xs text-slate-600">hr.careers@laoworld.la</p>
           <span className="text-[10px] text-slate-400 block">
-            ສົ່ງ CV ໄດ້ຕະຫຼອດ 24 ຊມ
+            {t.card_email_sub}
           </span>
         </div>
 
@@ -81,9 +82,9 @@ export default function ContactView({
           <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
             <MapPin className="w-5 h-5" />
           </div>
-          <h3 className="font-bold text-slate-900 text-sm">ຫ້ອງການໃຫຍ່</h3>
-          <p className="text-xs text-slate-600">
-            ຖະໜົນກຳແພງເມືອງ, ບ້ານໂພນທັນ, ເມືອງໄຊເສດຖາ, ນະຄອນຫຼວງວຽງຈັນ
+          <h3 className="font-bold text-slate-900 text-sm">{t.card_hq_title}</h3>
+          <p className="text-xs text-slate-600 leading-relaxed">
+            {t.card_hq_sub}
           </p>
         </div>
 
@@ -91,10 +92,10 @@ export default function ContactView({
           <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
             <MessageCircle className="w-5 h-5" />
           </div>
-          <h3 className="font-bold text-slate-900 text-sm">WhatsApp / Page</h3>
+          <h3 className="font-bold text-slate-900 text-sm">{t.card_social_title}</h3>
           <p className="text-xs text-slate-600">FB: Lao World Public Company</p>
           <span className="text-[10px] text-slate-400 block">
-            ຕອບກັບພາຍໃນ 24 ຊົ່ວໂມງ
+            {t.card_social_sub}
           </span>
         </div>
       </div>
@@ -113,7 +114,7 @@ export default function ContactView({
                 required
                 value={contactName}
                 onChange={(e) => setContactName(e.target.value)}
-                placeholder="ຊື່ ແລະ ນາມສະກຸນຂອງທ່ານ"
+                placeholder={t.placeholder_fullname}
                 className="px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-lw-blue bg-white"
               />
               <input
@@ -121,7 +122,7 @@ export default function ContactView({
                 required
                 value={contactPhone}
                 onChange={(e) => setContactPhone(e.target.value)}
-                placeholder="ເບີໂທລະສັບຕິດຕໍ່"
+                placeholder={t.placeholder_phone}
                 className="px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-lw-blue bg-white"
               />
             </div>
@@ -130,7 +131,7 @@ export default function ContactView({
               required
               value={contactSubject}
               onChange={(e) => setContactSubject(e.target.value)}
-              placeholder="ຫົວຂໍ້ທີ່ຕ້ອງການສອບຖາມ (ເຊັ່ນ: ສອບຖາມຕຳແໜ່ງ IT Support)"
+              placeholder={t.placeholder_subject}
               className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-lw-blue bg-white"
             />
             <textarea
@@ -138,53 +139,61 @@ export default function ContactView({
               required
               value={contactMessage}
               onChange={(e) => setContactMessage(e.target.value)}
-              placeholder="ພິມຂໍ້ຄວາມຂອງທ່ານທີ່ນີ້..."
+              placeholder={t.placeholder_msg}
               className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-lw-blue bg-white"
             ></textarea>
             <button
               type="submit"
               className="px-6 py-2.5 bg-lw-blue hover:bg-lw-lightBlue text-white font-bold rounded-xl transition text-xs shadow-2xs"
             >
-              ສົ່ງຂໍ້ຄວາມ
+              {t.btn_send_msg}
             </button>
           </form>
         </div>
 
         <div className="lg:col-span-5 bg-slate-100/70 rounded-3xl border border-slate-200 p-6 space-y-4">
           <h2 className="text-base font-bold text-slate-900">
-            4 ສະຖານທີ່ປະຈຳການ
+            {t.facilities_title}
           </h2>
           <div className="space-y-3 text-xs">
             <div className="p-3 bg-white rounded-xl border border-slate-200">
               <strong className="text-lw-blue block">
-                1. ຫ້ອງການໃຫຍ່ (Headquarters)
+                {currentLang === "lo" ? "1. ຫ້ອງການໃຫຍ່" : "1. Headquarters"}
               </strong>
               <p className="text-slate-500 text-[11px] mt-0.5">
-                ບ້ານໂພນທັນ, ເມືອງໄຊເສດຖາ, ນະຄອນຫຼວງວຽງຈັນ (10 ຕຳແໜ່ງ)
+                {currentLang === "lo"
+                  ? "ບ້ານໂພນທັນ, ເມືອງໄຊເສດຖາ, ນະຄອນຫຼວງວຽງຈັນ (10 ຕຳແໜ່ງ)"
+                  : "Phonthan Village, Xaysettha District, Vientiane Capital (10 Openings)"}
               </p>
             </div>
             <div className="p-3 bg-white rounded-xl border border-slate-200">
               <strong className="text-lw-blue block">
-                2. ສູນການຄ້າທົ່ງຂັນຄຳ (Thongkhankham)
+                {currentLang === "lo" ? "2. ສູນການຄ້າທົ່ງຂັນຄຳ" : "2. Thongkhankham Mall"}
               </strong>
               <p className="text-slate-500 text-[11px] mt-0.5">
-                ບ້ານທົ່ງຂັນຄຳ, ເມືອງຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ (5 ຕຳແໜ່ງ)
+                {currentLang === "lo"
+                  ? "ບ້ານທົ່ງຂັນຄຳ, ເມືອງຈັນທະບູລີ, ນະຄອນຫຼວງວຽງຈັນ (5 ຕຳແໜ່ງ)"
+                  : "Thongkhankham Village, Chanthabouly District, Vientiane Capital (5 Openings)"}
               </p>
             </div>
             <div className="p-3 bg-white rounded-xl border border-slate-200">
               <strong className="text-lw-blue block">
-                3. ສູນວາງສະແດງສິນຄ້າ ລາວ-ໄອເຕັກ (Lao-ITECC)
+                {currentLang === "lo" ? "3. ສູນວາງສະແດງສິນຄ້າ ລາວ-ໄອເຕັກ" : "3. Lao-ITECC Exhibition Center"}
               </strong>
               <p className="text-slate-500 text-[11px] mt-0.5">
-                ຖະໜົນກຳແພງເມືອງ, ເມືອງໄຊເສດຖາ (9 ຕຳແໜ່ງ)
+                {currentLang === "lo"
+                  ? "ຖະໜົນກຳແພງເມືອງ, ເມືອງໄຊເສດຖາ (9 ຕຳແໜ່ງ)"
+                  : "Kamphengmeuang Road, Xaysettha District (9 Openings)"}
               </p>
             </div>
             <div className="p-3 bg-white rounded-xl border border-slate-200">
               <strong className="text-lw-blue block">
-                4. ໄອເຕັກມໍ (ITECC Mall)
+                {currentLang === "lo" ? "4. ສູນການຄ້າ ໄອເຕັກມໍ" : "4. ITECC Mall"}
               </strong>
               <p className="text-slate-500 text-[11px] mt-0.5">
-                ສູນການຄ້າ ແລະ ບັນເທີງຄົບວົງຈອນ ຕິດກັບ ລາວ-ໄອເຕັກ (9 ຕຳແໜ່ງ)
+                {currentLang === "lo"
+                  ? "ສູນການຄ້າ ແລະ ບັນເທີງຄົບວົງຈອນ ຕິດກັບ ລາວ-ໄອເຕັກ (9 ຕຳແໜ່ງ)"
+                  : "Premier shopping & entertainment mall adjacent to Lao-ITECC (9 Openings)"}
               </p>
             </div>
           </div>

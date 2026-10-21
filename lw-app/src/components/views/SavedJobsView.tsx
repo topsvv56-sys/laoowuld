@@ -1,7 +1,14 @@
 "use client";
 
 import React from "react";
-import { Job, LanguageType, I18N } from "@/data/jobsData";
+import {
+  Job,
+  LanguageType,
+  I18N,
+  getJobTitle,
+  getJobLocation,
+  getJobType,
+} from "@/data/jobsData";
 import { Heart, MapPin } from "lucide-react";
 
 interface SavedJobsViewProps {
@@ -24,7 +31,7 @@ export default function SavedJobsView({
   t,
 }: SavedJobsViewProps) {
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full space-y-6">
+    <div className="py-8 px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto w-full space-y-6 animate-in fade-in duration-200">
       <div className="flex items-center justify-between border-b border-slate-200/90 pb-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
@@ -46,12 +53,10 @@ export default function SavedJobsView({
         <div className="py-16 bg-white rounded-3xl border border-slate-200 text-center text-slate-400">
           <Heart className="w-12 h-12 mx-auto text-slate-300 mb-2" />
           <p className="text-sm font-bold text-slate-700">
-            {currentLang === "lo" ? "ຍັງບໍ່ມີຕຳແໜ່ງງານທີ່ບັນທຶກໄວ້" : "No saved jobs yet"}
+            {t.saved_empty_title}
           </p>
           <p className="text-xs text-slate-400 mt-1">
-            {currentLang === "lo"
-              ? "ກົດໄອຄອນຫົວໃຈຢູ່ບັດວຽກເພື່ອບັນທຶກ"
-              : "Click the heart icon on any job card to save it here"}
+            {t.saved_empty_desc}
           </p>
         </div>
       ) : (
@@ -64,11 +69,12 @@ export default function SavedJobsView({
               <div>
                 <div className="flex items-start justify-between gap-2">
                   <h3 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
-                    {job.no}. {job.title}
+                    {job.no}. {getJobTitle(job, currentLang)}
                   </h3>
                   <button
                     onClick={(e) => onToggleSave(job.id, e)}
                     className="text-rose-500 hover:text-rose-600 p-1 -mr-1"
+                    title={currentLang === "lo" ? "ຍົກເລີກການບັນທຶກ" : "Remove from saved"}
                   >
                     <Heart className="w-4 h-4 fill-rose-500" />
                   </button>
@@ -77,10 +83,10 @@ export default function SavedJobsView({
                 <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 mb-3">
                   <span className="flex items-center gap-1 truncate max-w-[130px]">
                     <MapPin className="w-3 h-3 text-slate-400 flex-shrink-0" />
-                    <span className="truncate">{job.location}</span>
+                    <span className="truncate">{getJobLocation(job, currentLang)}</span>
                   </span>
                   <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 flex-shrink-0">
-                    {job.type}
+                    {getJobType(job, currentLang)}
                   </span>
                 </div>
               </div>

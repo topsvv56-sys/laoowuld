@@ -1,19 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { ViewType, UserProfile } from "@/data/jobsData";
+import { ViewType, UserProfile, LanguageType, I18N } from "@/data/jobsData";
 import { Phone, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 interface LoginViewProps {
   onLoginSuccess: (profile: UserProfile) => void;
   navigateTo: (view: ViewType) => void;
   showToast: (msg: string) => void;
+  currentLang?: LanguageType;
+  t: (typeof I18N)["lo"];
 }
 
 export default function LoginView({
   onLoginSuccess,
   navigateTo,
   showToast,
+  currentLang = "lo",
+  t,
 }: LoginViewProps) {
   const [loginMode, setLoginMode] = useState<"phone" | "email">("phone");
   const [showLoginPassword, setShowLoginPassword] = useState(false);
@@ -23,41 +27,57 @@ export default function LoginView({
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
     if (!loginInput.trim()) {
-      showToast(loginMode === "phone" ? "ກະລຸນາປ້ອນເບີໂທລະສັບ" : "ກະລຸນາປ້ອນອີເມວ");
+      showToast(
+        loginMode === "phone"
+          ? (currentLang === "lo" ? "ກະລຸນາປ້ອນເບີໂທລະສັບ" : "Please enter your phone number")
+          : (currentLang === "lo" ? "ກະລຸນາປ້ອນອີເມວ" : "Please enter your email")
+      );
       return;
     }
     const profile: UserProfile = {
-      name: "ຜູ້ຊອກວຽກ (Lao World)",
+      name: currentLang === "lo" ? "ຜູ້ຊອກວຽກ (Lao World)" : "Candidate (Lao World)",
       phone: loginMode === "phone" ? "020 " + loginInput : "020 5555 1234",
       email: loginMode === "email" ? loginInput : "user@laoworld.la",
     };
     onLoginSuccess(profile);
-    showToast("ເຂົ້າສູ່ລະບົບສຳເລັດແລ້ວ! ຍິນດີຕ້ອນຮັບກັບຄືນ");
+    showToast(
+      currentLang === "lo"
+        ? "ເຂົ້າສູ່ລະບົບສຳເລັດແລ້ວ! ຍິນດີຕ້ອນຮັບກັບຄືນ"
+        : "Signed in successfully! Welcome back"
+    );
     navigateTo("jobs");
   };
 
   const handleSocialAuth = (platform: string) => {
-    showToast(`ກຳລັງເຊື່ອມຕໍ່ກັບບັນຊີ ${platform}...`);
+    showToast(
+      currentLang === "lo"
+        ? `ກຳລັງເຊື່ອມຕໍ່ກັບບັນຊີ ${platform}...`
+        : `Connecting with ${platform}...`
+    );
     setTimeout(() => {
       onLoginSuccess({
-        name: `ຜູ້ໃຊ້ ${platform}`,
+        name: currentLang === "lo" ? `ຜູ້ໃຊ້ ${platform}` : `${platform} User`,
         phone: "020 5555 8899",
         email: `candidate.${platform.toLowerCase()}@laoworld.la`,
       });
-      showToast(`ເຂົ້າສູ່ລະບົບດ້ວຍ ${platform} ສຳເລັດ!`);
+      showToast(
+        currentLang === "lo"
+          ? `ເຂົ້າສູ່ລະບົບດ້ວຍ ${platform} ສຳເລັດ!`
+          : `Signed in with ${platform} successfully!`
+      );
       navigateTo("jobs");
     }, 600);
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6">
+    <div className="py-10 px-4 sm:px-6 animate-in fade-in duration-200">
       <div className="max-w-[460px] mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-1.5">
           <h2 className="text-2xl font-black text-lw-blue tracking-tight">
-            ເຂົ້າສູ່ລະບົບ
+            {t.login_title}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm mx-auto">
-            ເຂົ້າສູ່ລະບົບ, ເພື່ອເບິ່ງວຽກທີ່ເໝາະກັບທັກສະຂອງທ່ານ ແລະ ສະໝັກວຽກໄດ້ທັນທີ.
+            {t.login_subtitle}
           </p>
           <div className="w-12 h-1 bg-lw-blue rounded-full mx-auto mt-2"></div>
         </div>
@@ -74,7 +94,7 @@ export default function LoginView({
             }`}
           >
             <Phone className="w-3.5 h-3.5" />
-            <span>ໃຊ້ເບີໂທລະສັບ</span>
+            <span>{t.login_tab_phone}</span>
           </button>
           <button
             type="button"
@@ -86,7 +106,7 @@ export default function LoginView({
             }`}
           >
             <Mail className="w-3.5 h-3.5" />
-            <span>ໃຊ້ອີເມວ</span>
+            <span>{t.login_tab_email}</span>
           </button>
         </div>
 
@@ -95,7 +115,7 @@ export default function LoginView({
           {loginMode === "phone" ? (
             <div>
               <label className="block font-bold text-slate-800 mb-1.5 text-xs">
-                ເບີໂທລະສັບ
+                {t.label_phone_num}
               </label>
               <div className="flex rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white">
                 <span className="px-4 py-3 bg-slate-100/90 text-slate-800 font-bold text-xs flex items-center border-r border-slate-200 whitespace-nowrap">
@@ -113,7 +133,7 @@ export default function LoginView({
           ) : (
             <div>
               <label className="block font-bold text-slate-800 mb-1.5 text-xs">
-                ອີເມວ
+                {t.label_email_addr}
               </label>
               <div className="flex rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white">
                 <span className="px-4 py-3 bg-slate-100/90 text-slate-800 font-bold text-xs flex items-center border-r border-slate-200">
@@ -132,17 +152,19 @@ export default function LoginView({
 
           <div>
             <div className="flex items-center justify-between mb-1.5">
-              <label className="font-bold text-slate-800 text-xs">ລະຫັດຜ່ານ</label>
+              <label className="font-bold text-slate-800 text-xs">{t.label_password}</label>
               <button
                 type="button"
                 onClick={() =>
                   showToast(
-                    "ກະລຸນາຕິດຕໍ່ຝ່າຍ HR ເພື່ອຣີເຊັດລະຫັດຜ່ານ: 021 415 555"
+                    currentLang === "lo"
+                      ? "ກະລຸນາຕິດຕໍ່ຝ່າຍ HR ເພື່ອຣີເຊັດລະຫັດຜ່ານ: 021 415 555"
+                      : "Please contact HR department to reset password: +856 21 415 555"
                   )
                 }
                 className="text-amber-600 hover:text-amber-700 font-bold text-[11px]"
               >
-                ລືມລະຫັດຜ່ານ?
+                {currentLang === "lo" ? "ລືມລະຫັດຜ່ານ?" : "Forgot password?"}
               </button>
             </div>
             <div className="flex items-center rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white px-3 py-1">
@@ -173,7 +195,7 @@ export default function LoginView({
             type="submit"
             className="w-full py-3 bg-lw-blue hover:bg-lw-lightBlue text-white font-bold rounded-2xl transition shadow-xs text-xs active:scale-98 flex items-center justify-center gap-2"
           >
-            <span>ເຂົ້າສູ່ລະບົບ</span>
+            <span>{t.btn_login_submit}</span>
           </button>
 
           <div className="relative py-2 text-center">
@@ -181,7 +203,7 @@ export default function LoginView({
               <div className="w-full border-t border-slate-200"></div>
             </div>
             <span className="relative px-3 bg-white text-[11px] text-slate-400 font-semibold">
-              ຫຼື ເຂົ້າສູ່ລະບົບດ້ວຍ
+              {t.or_continue_with}
             </span>
           </div>
 
@@ -224,13 +246,13 @@ export default function LoginView({
           </div>
 
           <div className="text-center pt-2">
-            <span className="text-slate-500">ບໍ່ມີບັນຊີ? </span>
+            <span className="text-slate-500">{t.no_account_yet} </span>
             <button
               type="button"
               onClick={() => navigateTo("signup")}
               className="text-lw-blue font-bold hover:underline"
             >
-              ລົງທະບຽນ
+              {t.btn_go_signup}
             </button>
           </div>
         </form>

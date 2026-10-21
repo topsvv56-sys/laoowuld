@@ -1,9 +1,10 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Lao:wght@300;400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+Lao:wght@300;400;500;600;700;800;900&family=Noto+Sans+Lao+Looped:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: 'Noto Sans Lao', 'Phetsarath OT', 'Saysettha OT', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  --font-lao: 'Noto Sans Lao', 'Phetsarath OT', 'Saysettha OT', sans-serif;
+  --font-sans: 'Inter', 'Noto Sans Lao', 'Lao UI', 'Phetsarath OT', 'Saysettha OT', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-lao: 'Noto Sans Lao', 'Lao UI', 'Phetsarath OT', sans-serif;
 }
 
 :root {
@@ -15,7 +16,7 @@
   --lw-grey: #5b6574;
 }
 
-/* Ensure beautiful Noto Sans Lao font applies across all text, inputs, buttons, and selects */
+/* Ensure Inter renders for English/Latin first, and Noto Sans Lao renders seamlessly for Lao text */
 html,
 body,
 button,
@@ -23,9 +24,19 @@ input,
 optgroup,
 select,
 textarea {
-  font-family: 'Noto Sans Lao', 'Phetsarath OT', 'Saysettha OT', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
+  font-family: 'Inter', 'Noto Sans Lao', 'Lao UI', 'Phetsarath OT', 'Saysettha OT', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Sleek modern typography: crisp headings & refined line-height matching corporate documents */
+h1, h2, h3, h4, h5, h6, .font-bold, .font-black, .font-extrabold {
+  letter-spacing: -0.018em;
+}
+
+p, span, label, input, textarea {
+  letter-spacing: -0.005em;
 }
 
 /* Custom scrollbars */

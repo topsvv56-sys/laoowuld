@@ -1,7 +1,15 @@
-"use client";
-
 import React from "react";
-import { Job, CATEGORIES, LocationFilter, I18N } from "@/data/jobsData";
+import {
+  Job,
+  CATEGORIES,
+  LocationFilter,
+  LanguageType,
+  I18N,
+  getJobTitle,
+  getJobLocation,
+  getJobType,
+  getCategoryTitle,
+} from "@/data/jobsData";
 import {
   Search,
   MapPin,
@@ -23,6 +31,7 @@ interface JobsViewProps {
   onToggleSave: (jobId: string, e?: React.MouseEvent) => void;
   onViewDetails: (jobId: string) => void;
   onOpenApplyModal: (jobId: string) => void;
+  currentLang: LanguageType;
   t: (typeof I18N)["lo"];
 }
 
@@ -36,6 +45,7 @@ export default function JobsView({
   onToggleSave,
   onViewDetails,
   onOpenApplyModal,
+  currentLang,
   t,
 }: JobsViewProps) {
   const renderCategoryIcon = (iconName: string) => {
@@ -61,10 +71,10 @@ export default function JobsView({
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-200/90 pb-4">
         <div>
           <h1 className="text-xl sm:text-2xl font-black text-slate-900 tracking-tight">
-            ຮ່ວມງານກັບພວກເຮົາ (JOIN US) - LAO WORLD PUBLIC COMPANY
+            {t.hero_title}
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-            ເປີດຮັບສະໝັກບຸກຄະລາກອນທີ່ມີຄວາມຮູ້ຄວາມສາມາດ ເພື່ອເຕີບໂຕໄປພ້ອມກັບກຸ່ມບໍລິສັດ ລາວເວີລ
+            {t.hero_subtitle}
           </p>
         </div>
 
@@ -139,9 +149,9 @@ export default function JobsView({
       {filteredJobs.length === 0 ? (
         <div className="py-16 bg-white rounded-2xl border border-slate-200 text-center text-slate-400">
           <FolderSearch className="w-12 h-12 mx-auto text-slate-300 mb-2" />
-          <p className="text-sm font-bold text-slate-700">ບໍ່ພົບຕຳແໜ່ງງານທີ່ທ່ານຄົ້ນຫາ</p>
+          <p className="text-sm font-bold text-slate-700">{t.no_jobs_found}</p>
           <p className="text-xs text-slate-400 mt-1">
-            ລອງປ່ຽນຄຳສັບຄົ້ນຫາ ຫຼື ເລືອກ &apos;ທັງໝົດ&apos;
+            {t.try_search_again}
           </p>
         </div>
       ) : (
@@ -160,7 +170,7 @@ export default function JobsView({
                   >
                     {renderCategoryIcon(cat.icon)}
                   </span>
-                  <span>{cat.title}</span>
+                  <span>{getCategoryTitle(cat.key, currentLang)}</span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
@@ -173,26 +183,26 @@ export default function JobsView({
                       >
                         <div>
                           <h3 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
-                            {job.no}. {job.title}
+                            {job.no}. {getJobTitle(job, currentLang)}
                           </h3>
 
                           <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 mb-2">
                             <span className="flex items-center gap-1 truncate max-w-[130px]">
                               <MapPin className="w-3 h-3 text-slate-400 flex-shrink-0" />
-                              <span className="truncate">{job.location}</span>
+                              <span className="truncate">{getJobLocation(job, currentLang)}</span>
                             </span>
                             <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 flex-shrink-0">
-                              {job.type}
+                              {getJobType(job, currentLang)}
                             </span>
                           </div>
 
                           <div className="flex items-center justify-between text-[10px] text-slate-400 mb-2.5 pt-1.5 border-t border-dashed border-slate-100">
                             <span className="flex items-center gap-1 text-emerald-600 font-semibold">
                               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
-                              ເປີດຮັບສະໝັກ
+                              {t.job_status_open}
                             </span>
                             <span className="text-slate-400">
-                              ປິດ: {job.endDate ? job.endDate.split(" ")[0] : "30/11/2026"}
+                              {t.job_deadline} {job.endDate ? job.endDate.split(" ")[0] : "30/11/2026"}
                             </span>
                           </div>
                         </div>

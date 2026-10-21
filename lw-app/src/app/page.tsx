@@ -9,10 +9,13 @@ import {
   ViewType,
   LocationFilter,
   LanguageType,
+  JOBS_EN_MAP,
+  getJobTitle,
+  getJobLocation,
 } from "@/data/jobsData";
 import { CheckCircle } from "lucide-react";
 
-// Components
+
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ApplyModal from "@/components/ApplyModal";
@@ -73,9 +76,11 @@ export default function CareersPortal() {
       }
       if (searchQuery.trim()) {
         const q = searchQuery.toLowerCase();
-        const matchTitle = job.title.toLowerCase().includes(q);
-        const matchLoc = job.location.toLowerCase().includes(q);
-        if (!matchTitle && !matchLoc) return false;
+        const matchTitleLo = job.title.toLowerCase().includes(q);
+        const matchTitleEn = (JOBS_EN_MAP[job.id]?.title || "").toLowerCase().includes(q);
+        const matchLocLo = job.location.toLowerCase().includes(q);
+        const matchLocEn = (JOBS_EN_MAP[job.id]?.location || "").toLowerCase().includes(q);
+        if (!matchTitleLo && !matchTitleEn && !matchLocLo && !matchLocEn) return false;
       }
       return true;
     });
@@ -103,24 +108,25 @@ export default function CareersPortal() {
     const job = ALL_JOBS.find((j) => j.id === jobId);
     if (!job) return;
 
+    const title = getJobTitle(job, currentLang);
     if (savedJobIds.includes(jobId)) {
       setSavedJobIds((prev) => prev.filter((id) => id !== jobId));
       showToast(
         currentLang === "lo"
-          ? `ຍົກເລີກການບັນທຶກ ${job.title}`
-          : `Removed ${job.title} from saved`
+          ? `ຍົກເລີກການບັນທຶກ ${title}`
+          : `Removed ${title} from saved`
       );
     } else {
       setSavedJobIds((prev) => [...prev, jobId]);
       showToast(
         currentLang === "lo"
-          ? `ບັນທຶກຕຳແໜ່ງ ${job.title} ແລ້ວ!`
-          : `Saved ${job.title} to your bookmarks!`
+          ? `ບັນທຶກຕຳແໜ່ງ ${title} ແລ້ວ!`
+          : `Saved ${title} to your bookmarks!`
       );
     }
   };
 
-  // Open Apply (navigates to the Talent/Application page requested by user)
+  // Open Apply (navigates to the Talent/Application page)
   const openApplyModal = (jobId?: string) => {
     const targetId = jobId || currentDetailJobId || ALL_JOBS[0].id;
     setApplyModalJobId(targetId);
@@ -141,8 +147,8 @@ export default function CareersPortal() {
       if (targetJob) {
         showToast(
           currentLang === "lo"
-            ? `ເຂົ້າສູ່ລະບົບສຳເລັດ! ພ້ອມສະໝັກຕຳແໜ່ງ: ${targetJob.title}`
-            : `Logged in! Ready to apply: ${targetJob.title}`
+            ? `ເຂົ້າສູ່ລະບົບສຳເລັດ! ພ້ອມສະໝັກຕຳແໜ່ງ: ${getJobTitle(targetJob, currentLang)}`
+            : `Logged in! Ready to apply: ${getJobTitle(targetJob, currentLang)}`
         );
       }
     }
@@ -162,21 +168,25 @@ export default function CareersPortal() {
     setTimeout(() => {
       const newApp: Application = {
         id: "LW-" + Math.floor(10000 + Math.random() * 90000),
-        title: job.title,
-        location: job.location,
+        title: getJobTitle(job, currentLang),
+        location: getJobLocation(job, currentLang),
         candidateName: applicantName,
-        date: new Date().toLocaleDateString("lo-LA", {
+        date: new Date().toLocaleDateString(currentLang === "lo" ? "lo-LA" : "en-US", {
           year: "numeric",
           month: "short",
           day: "numeric",
         }),
-        status: "HR ກຳລັງກວດສອບ CV",
+        status: currentLang === "lo" ? "HR ກຳລັງກວດສອບ CV" : "HR Screening CV",
       };
 
       setAppliedJobs((prev) => [newApp, ...prev]);
       setIsSubmittingApply(false);
       closeApplyModal();
-      showToast(`ສົ່ງໃບສະໝັກຕຳແໜ່ງ ${job.title} ສຳເລັດແລ້ວ!`);
+      showToast(
+        currentLang === "lo"
+          ? `ສົ່ງໃບສະໝັກຕຳແໜ່ງ ${getJobTitle(job, currentLang)} ສຳເລັດແລ້ວ!`
+          : `Application for ${getJobTitle(job, currentLang)} submitted successfully!`
+      );
     }, 700);
   };
 
@@ -189,7 +199,7 @@ export default function CareersPortal() {
   // Logout
   const handleLogout = () => {
     setCurrentUser(null);
-    showToast("ທ່ານໄດ້ອອກຈາກລະບົບແລ້ວ");
+    showToast(currentLang === "lo" ? "ທ່ານໄດ້ອອກຈາກລະບົບແລ້ວ" : "You have been logged out");
   };
 
   return (
@@ -221,6 +231,7 @@ export default function CareersPortal() {
             onToggleSave={toggleSaveJob}
             onViewDetails={viewJobDetails}
             onOpenApplyModal={openApplyModal}
+            currentLang={currentLang}
             t={t}
           />
         )}
@@ -230,6 +241,8 @@ export default function CareersPortal() {
             job={selectedJob}
             onBack={() => navigateTo("jobs")}
             onOpenApplyModal={openApplyModal}
+            currentLang={currentLang}
+            t={t}
           />
         )}
 
@@ -246,7 +259,11 @@ export default function CareersPortal() {
         )}
 
         {currentView === "tracker" && (
-          <TrackerView appliedJobs={appliedJobs} />
+          <TrackerView
+            appliedJobs={appliedJobs}
+            currentLang={currentLang}
+            t={t}
+          />
         )}
 
         {currentView === "talent" && (
@@ -271,7 +288,9 @@ export default function CareersPortal() {
           />
         )}
 
-        {currentView === "about" && <AboutView />}
+        {currentView === "about" && (
+          <AboutView currentLang={currentLang} />
+        )}
 
         {currentView === "contact" && (
           <ContactView
@@ -286,6 +305,8 @@ export default function CareersPortal() {
             onLoginSuccess={handleAuthSuccess}
             navigateTo={navigateTo}
             showToast={showToast}
+            currentLang={currentLang}
+            t={t}
           />
         )}
 
@@ -294,6 +315,8 @@ export default function CareersPortal() {
             onSignupSuccess={handleAuthSuccess}
             navigateTo={navigateTo}
             showToast={showToast}
+            currentLang={currentLang}
+            t={t}
           />
         )}
       </main>
@@ -312,6 +335,7 @@ export default function CareersPortal() {
         setApplicantPhone={setApplicantPhone}
         isSubmitting={isSubmittingApply}
         onSubmit={handleApplySubmit}
+        currentLang={currentLang}
       />
 
       {/* Toast Notification */}
@@ -327,7 +351,7 @@ export default function CareersPortal() {
       </div>
 
       {/* Footer */}
-      <Footer navigateTo={navigateTo} />
+      <Footer navigateTo={navigateTo} currentLang={currentLang} />
     </div>
   );
 }

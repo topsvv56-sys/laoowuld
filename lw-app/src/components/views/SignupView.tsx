@@ -1,19 +1,23 @@
 "use client";
 
 import React, { useState } from "react";
-import { ViewType, UserProfile } from "@/data/jobsData";
+import { ViewType, UserProfile, LanguageType, I18N } from "@/data/jobsData";
 import { Phone, Mail, Lock, Eye, EyeOff } from "lucide-react";
 
 interface SignupViewProps {
   onSignupSuccess: (profile: UserProfile) => void;
   navigateTo: (view: ViewType) => void;
   showToast: (msg: string) => void;
+  currentLang?: LanguageType;
+  t: (typeof I18N)["lo"];
 }
 
 export default function SignupView({
   onSignupSuccess,
   navigateTo,
   showToast,
+  currentLang = "lo",
+  t,
 }: SignupViewProps) {
   const [signupMode, setSignupMode] = useState<"phone" | "email">("phone");
   const [showSignupPassword, setShowSignupPassword] = useState(false);
@@ -24,11 +28,19 @@ export default function SignupView({
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault();
     if (!signupFullName.trim()) {
-      showToast("ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນ");
+      showToast(
+        currentLang === "lo"
+          ? "ກະລຸນາປ້ອນຊື່ ແລະ ນາມສະກຸນ"
+          : "Please enter your full name"
+      );
       return;
     }
     if (signupPassword.length < 6) {
-      showToast("ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 6 ຕົວອັກສອນ");
+      showToast(
+        currentLang === "lo"
+          ? "ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 6 ຕົວອັກສອນ"
+          : "Password must be at least 6 characters"
+      );
       return;
     }
     const profile: UserProfile = {
@@ -37,32 +49,44 @@ export default function SignupView({
       email: signupMode === "email" ? signupInput : "candidate@laoworld.la",
     };
     onSignupSuccess(profile);
-    showToast(`ລົງທະບຽນສຳເລັດ! ຍິນດີຕ້ອນຮັບທ່ານ ${signupFullName}`);
+    showToast(
+      currentLang === "lo"
+        ? `ລົງທະບຽນສຳເລັດ! ຍິນດີຕ້ອນຮັບທ່ານ ${signupFullName}`
+        : `Registered successfully! Welcome ${signupFullName}`
+    );
     navigateTo("jobs");
   };
 
   const handleSocialAuth = (platform: string) => {
-    showToast(`ກຳລັງເຊື່ອມຕໍ່ກັບບັນຊີ ${platform}...`);
+    showToast(
+      currentLang === "lo"
+        ? `ກຳລັງເຊື່ອມຕໍ່ກັບບັນຊີ ${platform}...`
+        : `Connecting with ${platform}...`
+    );
     setTimeout(() => {
       onSignupSuccess({
-        name: `ຜູ້ໃຊ້ ${platform}`,
+        name: currentLang === "lo" ? `ຜູ້ໃຊ້ ${platform}` : `${platform} User`,
         phone: "020 5555 8899",
         email: `candidate.${platform.toLowerCase()}@laoworld.la`,
       });
-      showToast(`ເຂົ້າສູ່ລະບົບດ້ວຍ ${platform} ສຳເລັດ!`);
+      showToast(
+        currentLang === "lo"
+          ? `ເຂົ້າສູ່ລະບົບດ້ວຍ ${platform} ສຳເລັດ!`
+          : `Signed in with ${platform} successfully!`
+      );
       navigateTo("jobs");
     }, 600);
   };
 
   return (
-    <div className="py-10 px-4 sm:px-6">
+    <div className="py-10 px-4 sm:px-6 animate-in fade-in duration-200">
       <div className="max-w-[460px] mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-1.5">
           <h2 className="text-2xl font-black text-lw-blue tracking-tight">
-            ລົງທະບຽນ
+            {t.signup_title}
           </h2>
           <p className="text-xs sm:text-sm text-slate-600 leading-relaxed max-w-sm mx-auto">
-            ລົງທະບຽນ, ເພື່ອໃຫ້ Lao World ແນະນຳວຽກທີ່ເໝາະກັບທັກສະຂອງທ່ານ ແລະ ສະໝັກວຽກໄດ້ທັນທີ.
+            {t.signup_subtitle}
           </p>
           <div className="w-12 h-1 bg-lw-blue rounded-full mx-auto mt-2"></div>
         </div>
@@ -79,7 +103,7 @@ export default function SignupView({
             }`}
           >
             <Phone className="w-3.5 h-3.5" />
-            <span>ໃຊ້ເບີໂທລະສັບ</span>
+            <span>{t.signup_tab_phone}</span>
           </button>
           <button
             type="button"
@@ -91,21 +115,21 @@ export default function SignupView({
             }`}
           >
             <Mail className="w-3.5 h-3.5" />
-            <span>ໃຊ້ອີເມວ</span>
+            <span>{t.signup_tab_email}</span>
           </button>
         </div>
 
         <form onSubmit={handleSignup} className="space-y-4 text-xs">
           <div>
             <label className="block font-bold text-slate-800 mb-1.5 text-xs">
-              ຊື່ ແລະ ນາມສະກຸນ <span className="text-rose-500">*</span>
+              {t.label_fullname} <span className="text-rose-500">*</span>
             </label>
             <input
               type="text"
               required
               value={signupFullName}
               onChange={(e) => setSignupFullName(e.target.value)}
-              placeholder="ປ້ອນຊື່ ແລະ ນາມສະກຸນ"
+              placeholder={currentLang === "lo" ? "ປ້ອນຊື່ ແລະ ນາມສະກຸນ" : "Enter your full name"}
               className="w-full px-3.5 py-3 rounded-2xl border border-slate-200 text-xs bg-white text-slate-800 focus:outline-none focus:ring-2 focus:ring-lw-blue"
             />
           </div>
@@ -113,7 +137,7 @@ export default function SignupView({
           {signupMode === "phone" ? (
             <div>
               <label className="block font-bold text-slate-800 mb-1.5 text-xs">
-                ເບີໂທລະສັບ <span className="text-rose-500">*</span>
+                {t.label_phone_num} <span className="text-rose-500">*</span>
               </label>
               <div className="flex rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white">
                 <span className="px-4 py-3 bg-slate-100/90 text-slate-800 font-bold text-xs flex items-center border-r border-slate-200 whitespace-nowrap">
@@ -123,7 +147,7 @@ export default function SignupView({
                   type="tel"
                   value={signupInput}
                   onChange={(e) => setSignupInput(e.target.value)}
-                  placeholder="ປ້ອນຂໍ້ມູນ ເບີໂທລະສັບ"
+                  placeholder="920-xxx-xxx"
                   className="w-full px-3.5 py-3 text-xs bg-white text-slate-800 focus:outline-none"
                 />
               </div>
@@ -131,7 +155,7 @@ export default function SignupView({
           ) : (
             <div>
               <label className="block font-bold text-slate-800 mb-1.5 text-xs">
-                ອີເມວ <span className="text-rose-500">*</span>
+                {t.label_email_addr} <span className="text-rose-500">*</span>
               </label>
               <div className="flex rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white">
                 <span className="px-4 py-3 bg-slate-100/90 text-slate-800 font-bold text-xs flex items-center border-r border-slate-200">
@@ -150,7 +174,7 @@ export default function SignupView({
 
           <div>
             <label className="block font-bold text-slate-800 mb-1.5 text-xs">
-              ຕັ້ງລະຫັດຜ່ານໃໝ່ <span className="text-rose-500">*</span>
+              {t.label_password} <span className="text-rose-500">*</span>
             </label>
             <div className="flex items-center rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white px-3 py-1">
               <Lock className="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" />
@@ -159,7 +183,7 @@ export default function SignupView({
                 required
                 value={signupPassword}
                 onChange={(e) => setSignupPassword(e.target.value)}
-                placeholder="ສ້າງລະຫັດຜ່ານ (ຢ່າງໜ້ອຍ 6 ຕົວອັກສອນ)"
+                placeholder="••••••••"
                 className="w-full py-2 text-xs bg-white text-slate-800 focus:outline-none"
               />
               <button
@@ -176,31 +200,11 @@ export default function SignupView({
             </div>
           </div>
 
-          <p className="text-[11px] text-slate-500 text-center leading-relaxed">
-            ການກົດປຸ່ມ ລົງທະບຽນ ແມ່ນຖືວ່າທ່ານໄດ້ຍອມຮັບ{" "}
-            <button
-              type="button"
-              onClick={() => showToast("ນະໂຍບາຍຄວາມເປັນສ່ວນຕົວຂອງ Lao World")}
-              className="font-bold underline text-slate-800"
-            >
-              ນະໂຍບາຍ
-            </button>{" "}
-            ແລະ{" "}
-            <button
-              type="button"
-              onClick={() => showToast("ເງື່ອນໄຂການນຳໃຊ້")}
-              className="font-bold underline text-slate-800"
-            >
-              ເງື່ອນໄຂ ແລະ ຂໍ້ກຳນົດ
-            </button>{" "}
-            ຂອງ Lao World.
-          </p>
-
           <button
             type="submit"
             className="w-full py-3 bg-lw-blue hover:bg-lw-lightBlue text-white font-bold rounded-2xl transition shadow-xs text-xs active:scale-98 flex items-center justify-center gap-2"
           >
-            <span>ລົງທະບຽນ</span>
+            <span>{t.btn_signup_submit}</span>
           </button>
 
           <div className="relative py-2 text-center">
@@ -208,7 +212,7 @@ export default function SignupView({
               <div className="w-full border-t border-slate-200"></div>
             </div>
             <span className="relative px-3 bg-white text-[11px] text-slate-400 font-semibold">
-              ຫຼື ລົງທະບຽນດ້ວຍ
+              {t.or_continue_with}
             </span>
           </div>
 
@@ -251,13 +255,13 @@ export default function SignupView({
           </div>
 
           <div className="text-center pt-2">
-            <span className="text-slate-500">ມີບັນຊີແລ້ວບໍ່? </span>
+            <span className="text-slate-500">{t.have_account} </span>
             <button
               type="button"
               onClick={() => navigateTo("login")}
               className="text-lw-blue font-bold hover:underline"
             >
-              ເຂົ້າສູ່ລະບົບ
+              {t.btn_go_login}
             </button>
           </div>
         </form>

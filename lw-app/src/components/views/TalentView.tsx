@@ -1,8 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import { LanguageType, I18N, Job, Application, UserProfile } from "@/data/jobsData";
-import { FileUp, Send, ArrowLeft, CheckCircle2, X, Briefcase } from "lucide-react";
+import {
+  LanguageType,
+  I18N,
+  Job,
+  Application,
+  UserProfile,
+  getJobTitle,
+  getJobLocation,
+} from "@/data/jobsData";
+import { FileUp, Send, ArrowLeft, CheckCircle2, X } from "lucide-react";
 
 interface TalentViewProps {
   currentLang: LanguageType;
@@ -30,8 +38,12 @@ export default function TalentView({
   const [talentFullName, setTalentFullName] = useState("");
   const [talentPhone, setTalentPhone] = useState("");
   const [talentEmail, setTalentEmail] = useState("");
-  const [talentLocation, setTalentLocation] = useState("ທຸກສາຂາ");
-  const [talentCategory, setTalentCategory] = useState("ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ");
+  const [talentLocation, setTalentLocation] = useState(currentLang === "lo" ? "ທຸກສາຂາ" : "All Facilities");
+  const [talentCategory, setTalentCategory] = useState(
+    currentLang === "lo"
+      ? "ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ"
+      : "Marketing & Sales"
+  );
   const [talentNotes, setTalentNotes] = useState("");
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [isSubmittingTalent, setIsSubmittingTalent] = useState(false);
@@ -40,19 +52,15 @@ export default function TalentView({
   // Sync with target job or logged in user
   useEffect(() => {
     if (targetJob) {
-      if (targetJob.locKey === "headquarters") setTalentLocation("ຫ້ອງການໃຫຍ່");
-      else if (targetJob.locKey === "thongkhankham") setTalentLocation("ສູນການຄ້າທົ່ງຂັນຄຳ");
-      else if (targetJob.locKey === "itecc_exhibit") setTalentLocation("ລາວ-ໄອເຕັກ");
-      else if (targetJob.locKey === "itecc_mall") setTalentLocation("ໄອເຕັກມໍ");
-
-      setTalentCategory(`${targetJob.no}. ${targetJob.title}`);
+      setTalentLocation(getJobLocation(targetJob, currentLang));
+      setTalentCategory(`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`);
     }
     if (currentUser) {
       if (currentUser.name) setTalentFullName(currentUser.name);
       if (currentUser.phone) setTalentPhone(currentUser.phone);
       if (currentUser.email) setTalentEmail(currentUser.email);
     }
-  }, [targetJob, currentUser]);
+  }, [targetJob, currentUser, currentLang]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -80,25 +88,26 @@ export default function TalentView({
       if (onApplySuccess && targetJob) {
         onApplySuccess({
           id: "LW-" + Math.floor(10000 + Math.random() * 90000),
-          title: targetJob.title,
-          location: targetJob.location,
+          title: getJobTitle(targetJob, currentLang),
+          location: getJobLocation(targetJob, currentLang),
           candidateName: talentFullName,
-          date: new Date().toLocaleDateString("lo-LA", {
+          date: new Date().toLocaleDateString(currentLang === "lo" ? "lo-LA" : "en-US", {
             year: "numeric",
             month: "short",
             day: "numeric",
           }),
-          status: "HR ກຳລັງກວດສອບ CV",
+          status: currentLang === "lo" ? "HR ກຳລັງກວດສອບ CV" : "HR Screening CV",
         });
       }
 
+      const jobTitle = targetJob ? getJobTitle(targetJob, currentLang) : "";
       showToast(
         currentLang === "lo"
           ? (targetJob
-              ? `ສົ່ງໃບສະໝັກຕຳແໜ່ງ ${targetJob.title} ສຳເລັດແລ້ວ!`
-              : `ຂໍຂອບໃຈ ${talentFullName}! CV ຂອງທ່ານຖືກບັນທຶກເຂົ້າ Talent Pool ແລ້ວ`)
+              ? `ສົ່ງໃບສະໝັກຕຳແໜ່ງ ${jobTitle} ສຳເລັດແລ້ວ!`
+              : `ຂໍຂອບໃຈ ${talentFullName}! CV ຂອງທ່ານຖືກບັນທຶກເຂົ້າຄັງບຸກຄະລາກອນແລ້ວ`)
           : (targetJob
-              ? `Application for ${targetJob.title} submitted successfully!`
+              ? `Application for ${jobTitle} submitted successfully!`
               : `Thank you ${talentFullName}! Your CV is saved to Lao World Talent Pool`)
       );
 
@@ -121,14 +130,14 @@ export default function TalentView({
           className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-500 hover:text-[#0070ba] transition"
         >
           <ArrowLeft className="w-4 h-4" />
-          <span>{currentLang === "lo" ? "ກັບຄືນໜ້າລາຍການວຽກ (Back to Jobs)" : "Back to Jobs"}</span>
+          <span>{currentLang === "lo" ? "ກັບຄືນໜ້າລາຍການວຽກ" : "Back to Openings"}</span>
         </button>
       )}
 
-      {/* Header section matching screenshot */}
+      {/* Header section */}
       <div className="text-center space-y-2">
         <span className="px-3.5 py-1 bg-blue-100 text-[#0070ba] rounded-full text-xs font-bold uppercase tracking-wider inline-block">
-          Lao World Talent Network
+          {t.talent_badge}
         </span>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
           {t.talent_title}
@@ -139,8 +148,6 @@ export default function TalentView({
       </div>
 
       <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
-
-        {/* Form matching screenshot */}
         <form onSubmit={handleTalentSubmit} className="space-y-5 text-xs text-slate-700">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
@@ -152,7 +159,7 @@ export default function TalentView({
                 required
                 value={talentFullName}
                 onChange={(e) => setTalentFullName(e.target.value)}
-                placeholder="ປ້ອນຊື່ ແລະ ນາມສະກຸນ"
+                placeholder={currentLang === "lo" ? "ປ້ອນຊື່ ແລະ ນາມສະກຸນ" : "Enter your full name"}
                 className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
               />
             </div>
@@ -187,13 +194,13 @@ export default function TalentView({
             </div>
             <div>
               <label className="block font-bold mb-1.5">
-                {targetJob ? (currentLang === "lo" ? "ສາຂາປະຈຳການ (Facility)" : "Facility") : t.talent_pref_loc}
+                {targetJob ? (currentLang === "lo" ? "ສາຂາປະຈຳການ" : "Facility") : t.talent_pref_loc}
               </label>
               {targetJob ? (
                 <input
                   type="text"
                   readOnly
-                  value={targetJob.location}
+                  value={getJobLocation(targetJob, currentLang)}
                   className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-800 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
                 />
               ) : (
@@ -202,11 +209,23 @@ export default function TalentView({
                   onChange={(e) => setTalentLocation(e.target.value)}
                   className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
                 >
-                  <option value="ທຸກສາຂາ">ທຸກສາຂາ (Any Facility)</option>
-                  <option value="ຫ້ອງການໃຫຍ່">ຫ້ອງການໃຫຍ່ (Headquarters)</option>
-                  <option value="ສູນການຄ້າທົ່ງຂັນຄຳ">ສູນການຄ້າທົ່ງຂັນຄຳ (Thongkhankham)</option>
-                  <option value="ລາວ-ໄອເຕັກ">ສູນວາງສະແດງສິນຄ້າ ລາວ-ໄອເຕັກ (Lao-ITECC)</option>
-                  <option value="ໄອເຕັກມໍ">ໄອເຕັກມໍ (ITECC Mall)</option>
+                  {currentLang === "lo" ? (
+                    <>
+                      <option value="ທຸກສາຂາ">ທຸກສາຂາ</option>
+                      <option value="ຫ້ອງການໃຫຍ່">ຫ້ອງການໃຫຍ່</option>
+                      <option value="ສູນການຄ້າທົ່ງຂັນຄຳ">ສູນການຄ້າທົ່ງຂັນຄຳ</option>
+                      <option value="ລາວ-ໄອເຕັກ">ສູນວາງສະແດງສິນຄ້າ ລາວ-ໄອເຕັກ</option>
+                      <option value="ໄອເຕັກມໍ">ສູນການຄ້າ ໄອເຕັກມໍ</option>
+                    </>
+                  ) : (
+                    <>
+                      <option value="All Facilities">All Facilities</option>
+                      <option value="Headquarters">Headquarters</option>
+                      <option value="Thongkhankham Mall">Thongkhankham Mall</option>
+                      <option value="Lao-ITECC Exhibition Center">Lao-ITECC Exhibition Center</option>
+                      <option value="ITECC Mall">ITECC Mall</option>
+                    </>
+                  )}
                 </select>
               )}
             </div>
@@ -214,13 +233,13 @@ export default function TalentView({
 
           <div>
             <label className="block font-bold mb-1.5">
-              {targetJob ? (currentLang === "lo" ? "ຕຳແໜ່ງທີ່ສະໝັກ (Job Position)" : "Applying Position") : t.talent_field}
+              {targetJob ? (currentLang === "lo" ? "ຕຳແໜ່ງທີ່ສະໝັກ" : "Applying Position") : t.talent_field}
             </label>
             {targetJob ? (
               <input
                 type="text"
                 readOnly
-                value={`${targetJob.no}. ${targetJob.title}`}
+                value={`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`}
                 className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-800 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
               />
             ) : (
@@ -229,21 +248,33 @@ export default function TalentView({
                 onChange={(e) => setTalentCategory(e.target.value)}
                 className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
               >
-                <option value="ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ (Marketing & Sales)">
-                  ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ (Marketing &amp; Sales)
-                </option>
-                <option value="ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ (IT & Creative Media)">
-                  ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ (IT &amp; Creative Media)
-                </option>
-                <option value="ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ (Finance & Admin)">
-                  ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ (Finance &amp; Admin)
-                </option>
-                <option value="ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ (Management)">
-                  ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ (Management)
-                </option>
-                <option value="ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ (Operations & Services)">
-                  ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ (Operations &amp; Services)
-                </option>
+                {currentLang === "lo" ? (
+                  <>
+                    <option value="ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ">
+                      ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ
+                    </option>
+                    <option value="ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ">
+                      ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ
+                    </option>
+                    <option value="ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ">
+                      ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ
+                    </option>
+                    <option value="ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ">
+                      ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ
+                    </option>
+                    <option value="ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ">
+                      ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ
+                    </option>
+                  </>
+                ) : (
+                  <>
+                    <option value="Marketing & Sales">Marketing &amp; Sales</option>
+                    <option value="IT, Creative & Media">IT, Creative &amp; Media</option>
+                    <option value="Finance, Legal & Administration">Finance, Legal &amp; Administration</option>
+                    <option value="Management & Executives">Management &amp; Executives</option>
+                    <option value="Frontline Services & Operations">Frontline Services &amp; Operations</option>
+                  </>
+                )}
               </select>
             )}
           </div>
@@ -290,10 +321,10 @@ export default function TalentView({
                 <>
                   <FileUp className="w-8 h-8 text-[#0070ba] mx-auto mb-1.5" />
                   <p className="font-bold text-slate-800 text-xs">
-                    {currentLang === "lo" ? "ຄລິກ ຫຼື ລາກໄຟລ໌ CV ມາວາງທີ່ນີ້" : "Click or drag & drop CV here"}
+                    {t.talent_upload_drag}
                   </p>
                   <p className="text-[10px] text-slate-400 mt-0.5">
-                    {currentLang === "lo" ? "ຮອງຮັບໄຟລ໌ PDF, DOCX (ຂະໜາດບໍ່ເກີນ 10MB)" : "Supports PDF, DOCX (up to 10MB)"}
+                    {t.talent_upload_hint}
                   </p>
                 </>
               )}
@@ -308,7 +339,7 @@ export default function TalentView({
               rows={3}
               value={talentNotes}
               onChange={(e) => setTalentNotes(e.target.value)}
-              placeholder="ບອກພວກເຮົາສັ້ນໆກ່ຽວກັບປະສົບການ ແລະ ເປົ້າໝາຍອາຊີບຂອງທ່ານ..."
+              placeholder={t.talent_notes_placeholder}
               className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
             ></textarea>
           </div>
@@ -321,10 +352,12 @@ export default function TalentView({
             <Send className="w-4 h-4" />
             <span>
               {isSubmittingTalent
-                ? (currentLang === "lo" ? "ກຳລັງສົ່ງຂໍ້ມູນ..." : "Submitting...")
+                ? t.talent_submitting
                 : targetJob
-                  ? (currentLang === "lo" ? `ສົ່ງໃບສະໝັກຕຳແໜ່ງ: ${targetJob.title}` : `Submit Application: ${targetJob.title}`)
-                  : (currentLang === "lo" ? "ສົ່ງຊີວະປະຫວັດ (Submit CV)" : "Submit CV")}
+                  ? (currentLang === "lo"
+                      ? `ສົ່ງໃບສະໝັກຕຳແໜ່ງ: ${getJobTitle(targetJob, currentLang)}`
+                      : `Submit Application: ${getJobTitle(targetJob, currentLang)}`)
+                  : t.talent_submit_btn}
             </span>
           </button>
         </form>

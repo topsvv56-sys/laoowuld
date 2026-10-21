@@ -55,11 +55,11 @@ export type LocationFilter =
 export type LanguageType = "lo" | "en";
 
 export const CATEGORIES: Category[] = [
-  { key: 'cat-mgt', title: '1. ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ (Management)', icon: 'briefcase', color: 'bg-indigo-900 text-white' },
-  { key: 'cat-it', title: '2. ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ (IT, Creative & Media)', icon: 'laptop', color: 'bg-slate-700 text-white' },
-  { key: 'cat-mkt', title: '3. ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ (Marketing & Sales)', icon: 'megaphone', color: 'bg-amber-600 text-white' },
-  { key: 'cat-adm', title: '4. ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ (Finance & Admin)', icon: 'file-text', color: 'bg-purple-800 text-white' },
-  { key: 'cat-ops', title: '5. ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ (Operations & Services)', icon: 'concierge-bell', color: 'bg-teal-700 text-white' }
+  { key: 'cat-mgt', title: '1. ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ', icon: 'briefcase', color: 'bg-indigo-900 text-white' },
+  { key: 'cat-it', title: '2. ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ', icon: 'laptop', color: 'bg-slate-700 text-white' },
+  { key: 'cat-mkt', title: '3. ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ', icon: 'megaphone', color: 'bg-amber-600 text-white' },
+  { key: 'cat-adm', title: '4. ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ', icon: 'file-text', color: 'bg-purple-800 text-white' },
+  { key: 'cat-ops', title: '5. ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ', icon: 'concierge-bell', color: 'bg-teal-700 text-white' }
 ];
 
 export const ALL_JOBS: Job[] = [
@@ -503,75 +503,859 @@ export const ALL_JOBS: Job[] = [
   }
 ];
 
+export const JOBS_EN_MAP: Record<string, {
+  title: string;
+  location: string;
+  responsibilities: string[];
+  requirements: string[];
+}> = {
+  'mgt-01': {
+    title: 'HR Development Section Manager',
+    location: 'Headquarters',
+    responsibilities: [
+      'Formulate recruitment strategies and talent development across Lao World Public Company',
+      'Design corporate training curriculum and oversee KPIs & performance appraisal systems',
+      'Manage compensation, benefits, and employee relations in accordance with Lao labor regulations'
+    ],
+    requirements: [
+      "Bachelor's degree or higher in Human Resources, Business Administration, or related fields",
+      'Minimum 3-5 years of leadership experience in HR management',
+      'Strong leadership, excellent communication, and dispute resolution skills'
+    ]
+  },
+  'mgt-02': {
+    title: 'Sales & Marketing Department Manager',
+    location: 'Thongkhankham Mall',
+    responsibilities: [
+      'Develop leasing sales strategies and promotional campaigns to drive shopper traffic to Thongkhankham Mall',
+      'Lead the sales team, negotiate master lease contracts with anchor tenants, and track revenue targets',
+      'Analyze market trends and consumer behaviors to maximize retail space monetization'
+    ],
+    requirements: [
+      "Bachelor's degree in Marketing, Sales, Business Administration, or related fields",
+      'At least 3 years of experience in retail leasing or commercial mall sales management',
+      'Outstanding negotiation and deal-closing capabilities'
+    ]
+  },
+  'mgt-03': {
+    title: 'Marketing Section Manager',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Plan marketing and PR for national and international trade exhibitions at Lao-ITECC',
+      'Create multi-channel online and offline marketing campaigns to attract exhibitors and visitors',
+      'Liaise with foreign embassies, chambers of commerce, and business associations'
+    ],
+    requirements: [
+      "Bachelor's degree in Marketing, Communications, or related disciplines",
+      '2-3+ years of experience in event marketing or trade exhibition management',
+      'Fluent English communication skills'
+    ]
+  },
+  'mgt-04': {
+    title: 'Marketing Department Manager',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Lead marketing strategy for ITECC Mall to increase shopper foot traffic and brand awareness',
+      'Organize festive events, weekend markets, concert promotions, and seasonal campaigns',
+      'Manage marketing budget allocation and evaluate campaign ROI'
+    ],
+    requirements: [
+      "Bachelor's degree or higher in Marketing or Business Administration",
+      '3-5 years of proven experience in retail or shopping mall marketing',
+      'Creative mindset with deep understanding of youth and family lifestyle trends'
+    ]
+  },
+  'mgt-05': {
+    title: 'Office Administration Section Manager',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Supervise general administration, cleanliness, security, and facility landscaping at ITECC Mall',
+      'Oversee document workflow, incoming/outgoing correspondence, and office procurement',
+      'Address day-to-day tenant requests and maintain smooth facility operations'
+    ],
+    requirements: [
+      "Bachelor's degree in Business Administration, General Management, or related fields",
+      'At least 2 years of experience in office administration or facility management',
+      'Detail-oriented with strong problem-solving and interpersonal skills'
+    ]
+  },
+  'mgt-06': {
+    title: 'Sales Section Manager',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Lead the retail leasing team for mall shops, promotional booth spaces, and advertising billboards',
+      'Build and nurture strong relationships with corporate clients, brands, and commercial tenants',
+      'Establish monthly sales targets and report commercial metrics to executive leadership'
+    ],
+    requirements: [
+      "Bachelor's degree in Sales, Marketing, or related disciplines",
+      '2+ years of experience in commercial real estate or mall space sales',
+      'Excellent relationship-building and presentation skills'
+    ]
+  },
+  'mgt-07': {
+    title: 'Food Court Section Manager',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Manage ITECC Mall Food Court ensuring top food hygiene, cleanliness, and service quality standards',
+      'Supervise food court card cash systems, sales reconciliation, and vendor accounting',
+      'Source, evaluate, and onboard reputable dining concepts and food vendors'
+    ],
+    requirements: [
+      'Higher Diploma or Bachelor’s degree in Hospitality, Service Management, or Business',
+      'Minimum 2 years of experience in food court, large restaurant, or F&B operations management',
+      'Strong knowledge of food safety, hygiene regulations, and customer service'
+    ]
+  },
+  'it-01': {
+    title: 'IT Support Officer',
+    location: 'Headquarters',
+    responsibilities: [
+      'Maintain and troubleshoot office computers, printers, local network (LAN/Wi-Fi), and IT equipment',
+      'Install and update Windows OS, MS Office, antivirus, and internal enterprise software',
+      'Support data backup routines and monitor corporate CCTV surveillance systems'
+    ],
+    requirements: [
+      'Diploma or Bachelor’s in Computer Science, Information Technology, or Network Engineering',
+      'Solid foundational knowledge in computer hardware, software, and basic networking',
+      'Customer-oriented service mindset with passion to learn new technologies'
+    ]
+  },
+  'it-02': {
+    title: 'Video Editor & Motion Designer',
+    location: 'Headquarters',
+    responsibilities: [
+      'Edit promotional video reels, TikTok/Facebook clips, interviews, and corporate event videos',
+      'Incorporate sound effects, background audio, color grading, and motion graphics',
+      'Collaborate with content creators on storyboards, visual direction, and creative concepts'
+    ],
+    requirements: [
+      'Proficiency in Adobe Premiere Pro, After Effects, or CapCut PC',
+      'Strong video portfolio/showreel demonstrating creative pacing and visual flair',
+      'Creative storytelling skills with strict adherence to production deadlines'
+    ]
+  },
+  'it-03': {
+    title: 'Content Creator & Copywriter',
+    location: 'Headquarters',
+    responsibilities: [
+      'Write compelling copy, articles, and PR posts for Facebook, TikTok, and official websites',
+      'Plan and maintain monthly social media content calendars across all company facilities',
+      'Analyze audience engagement metrics and produce viral, trend-aware multimedia content'
+    ],
+    requirements: [
+      "Bachelor's degree in Communications, Journalism, Marketing, or related fields",
+      'Outstanding writing and storytelling skills with authentic tone',
+      'Deep understanding of social media platforms, algorithms, and digital trends'
+    ]
+  },
+  'it-04': {
+    title: 'Graphic Designer & Videographer',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Photograph and film exhibitions, banquets, trade fairs, and national events at Lao-ITECC',
+      'Design event marketing collateral including backdrops, vinyl banners, posters, and flyers',
+      'Catalog and maintain the corporate digital photo and video archives'
+    ],
+    requirements: [
+      'Proficiency with DSLR/Mirrorless cameras, studio lighting, and camera gimbals',
+      'Expert skills in Adobe Photoshop, Illustrator, and Lightroom',
+      'Compelling graphic design and event photography portfolio'
+    ]
+  },
+  'it-05': {
+    title: 'Audio-Visual & Stage Lighting Technician',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Operate audio mixing consoles, stage lighting rigs, and large LED display screens during events',
+      'Setup, test, and calibrate equipment prior to showtime ensuring flawless technical execution',
+      'Maintain, inspect, and service audio-visual equipment regularly'
+    ],
+    requirements: [
+      'Higher diploma or vocational degree in Electronics, Sound Engineering, or AV Production',
+      'At least 1 year of hands-on experience controlling AV systems for concerts, conferences, or weddings',
+      'Flexibility to work according to event schedules including evenings and weekends'
+    ]
+  },
+  'it-06': {
+    title: 'Motion Graphics & Video Specialist',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Produce engaging motion graphics, 2D animations, and digital ads for mall brands and events',
+      'Edit event recap videos, concerts, promotional campaigns, and tenant highlights',
+      'Design modern title sequences, kinetic typography, intros, and social media bumpers'
+    ],
+    requirements: [
+      'Proficient in Adobe After Effects, Premiere Pro, and Illustrator',
+      'Strong understanding of motion design principles, visual rhythm, and typography',
+      'Proven portfolio showcasing motion design and video editing work'
+    ]
+  },
+  'mkt-01': {
+    title: 'Senior Commercial Relations Officer',
+    location: 'Headquarters',
+    responsibilities: [
+      'Coordinate with corporate partners, trade associations, government agencies, and international entities',
+      'Draft partnership agreements, MOUs, and prepare business development presentation decks',
+      'Participate in commercial negotiations and follow up on execution of strategic agreements'
+    ],
+    requirements: [
+      "Bachelor's degree in International Relations, Economics, Business, or Law",
+      '3+ years of experience in business development or international liaison',
+      'Fluent spoken and written English skills'
+    ]
+  },
+  'mkt-02': {
+    title: 'Commercial Leasing & Sales Officer',
+    location: 'Thongkhankham Mall',
+    responsibilities: [
+      'Contact prospective vendors and present retail shop spaces, food stalls, and promotional booths',
+      'Conduct on-site space viewings, explain lease terms, pricing structures, and utility contracts',
+      'Manage lease renewals and assist commercial tenants during their store opening setup'
+    ],
+    requirements: [
+      'Diploma or Bachelor’s degree in Sales, Marketing, or Business Administration',
+      'Strong interpersonal and sales negotiation skills with a warm service attitude',
+      'Previous experience in shopping mall or market leasing is a definite plus'
+    ]
+  },
+  'mkt-03': {
+    title: 'Customer Public Relations Officer',
+    location: 'Thongkhankham Mall',
+    responsibilities: [
+      'Welcome and provide information to shoppers and visitors at Thongkhankham Mall',
+      'Make public address system announcements for promotions, vehicle notices, and emergency alerts',
+      'Support on-site promotional sales activities and gift redemption campaigns'
+    ],
+    requirements: [
+      'Clear, pleasant speaking voice with polite and articulate communication skills',
+      'Well-groomed appearance with friendly interpersonal skills and patience',
+      'Students looking for flexible part-time shifts are welcome to apply'
+    ]
+  },
+  'mkt-04': {
+    title: 'Banquet & Convention Coordinator',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Handle event bookings, consult with clients, and plan weddings, banquets, and seminars',
+      'Coordinate with venue setup teams, banquet catering services, and audio-visual technicians',
+      'Supervise on-site event execution from start to finish ensuring client satisfaction'
+    ],
+    requirements: [
+      'Diploma or Bachelor’s degree in Hospitality, Tourism, Marketing, or related fields',
+      '1+ years of experience as banquet coordinator, wedding planner, or event organizer',
+      'Fast-paced problem-solving skills and ability to thrive under pressure'
+    ]
+  },
+  'mkt-05': {
+    title: 'Exhibition Public Relations Officer',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Welcome VIP delegates, dignitaries, and attendees at major trade exhibitions',
+      'Provide booth locations, event schedules, and facilitate on-site visitor registration',
+      'Assist visiting media and press correspondents during opening ceremonies'
+    ],
+    requirements: [
+      'Professional demeanor and grooming with cheerful hospitality mindset',
+      'Good conversational English or Chinese language abilities',
+      'High punctuality and strong commitment to customer service'
+    ]
+  },
+  'mkt-06': {
+    title: 'Customer Service Officer',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Staff the main information and customer service counter at ITECC Mall',
+      'Answer customer inquiries, handle feedback/complaints courteously, and coordinate swift resolutions',
+      'Manage loyalty point redemptions, gift certificates, and shopper rewards programs'
+    ],
+    requirements: [
+      'Higher diploma or Bachelor’s degree in any field',
+      'Service-oriented attitude with calm temperament and active listening skills',
+      'Basic proficiency in office computer software'
+    ]
+  },
+  'mkt-07': {
+    title: 'Mall Information & PR Assistant',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Broadcast mall announcements regarding entertainment events, movie showtimes, and promotions',
+      'Guide visitors to retail shops, cinema, bowling alley, and food courts',
+      'Support information desk administration and routine visitor inquiries'
+    ],
+    requirements: [
+      'Pleasant voice, quick responsiveness, and positive energy',
+      'Ability to work rotating shifts including weekends',
+      'University students seeking part-time experience are encouraged to apply'
+    ]
+  },
+  'adm-01': {
+    title: 'Legal Affairs Officer',
+    location: 'Headquarters',
+    responsibilities: [
+      'Review and draft commercial contracts, lease agreements, vendor contracts, and legal notices',
+      'Provide legal guidance regarding labor law, corporate governance, and securities regulations',
+      'Liaise with relevant government ministries regarding business permits and regulatory compliance'
+    ],
+    requirements: [
+      "Bachelor's degree or higher in Law (Corporate/Civil Law)",
+      'At least 2 years of corporate legal experience',
+      'High precision and meticulous attention to detail in contractual analysis'
+    ]
+  },
+  'adm-02': {
+    title: 'Finance & Accounting Officer',
+    location: 'Headquarters',
+    responsibilities: [
+      'Verify and record daily revenue, expenditures, invoices, receipts, and tax documentation',
+      'Prepare cash flow reports and reconcile corporate bank accounts',
+      'Coordinate with partner banks and execute monthly employee payroll disbursements'
+    ],
+    requirements: [
+      "Bachelor's degree in Finance, Banking, or Accounting",
+      '1-2+ years of experience in corporate accounting or financial operations',
+      'Proficiency in MS Excel (VLOOKUP, Pivot Tables) and accounting software'
+    ]
+  },
+  'adm-03': {
+    title: 'Document Control & Archive Clerk',
+    location: 'Headquarters',
+    responsibilities: [
+      'Organize, categorize, and archive company documents in both physical and digital formats',
+      'Scan, photocopy, and distribute incoming/outgoing corporate correspondence',
+      'Assist general office operations as assigned by department heads'
+    ],
+    requirements: [
+      'Vocational diploma or higher in any discipline',
+      'Highly organized, systematic, honest, and detail-oriented',
+      'Basic computer literacy in MS Word and Excel'
+    ]
+  },
+  'adm-04': {
+    title: 'Building & Facilities Management Officer',
+    location: 'Thongkhankham Mall',
+    responsibilities: [
+      'Inspect building utilities: electrical systems, plumbing, air conditioning, elevators, and fire safety',
+      'Coordinate with external maintenance contractors for preventive building servicing',
+      'Log tenant maintenance requests and dispatch technicians for prompt repair'
+    ],
+    requirements: [
+      'Diploma or Bachelor’s in Electrical Engineering, Mechanical Engineering, or Building Management',
+      '1+ years of building maintenance or shopping center facility experience',
+      'High sense of responsibility and readiness to respond to facility emergencies'
+    ]
+  },
+  'adm-05': {
+    title: 'Office Administration Coordinator',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Manage venue rental contracts and documentation for conference halls and exhibition areas',
+      'Coordinate venue reservation schedules and communicate with internal support teams',
+      'Monitor and control office supplies inventory and disbursement records'
+    ],
+    requirements: [
+      'Diploma or Bachelor’s in Business Administration, Management, or related fields',
+      'Strong interpersonal and cross-departmental coordination skills',
+      'Proficient in Microsoft Office (Word, Excel, PowerPoint)'
+    ]
+  },
+  'ops-01': {
+    title: 'Executive & Corporate Driver',
+    location: 'Headquarters',
+    responsibilities: [
+      'Safely chauffeur executives, VIP delegations, and staff to external appointments and province visits',
+      'Perform daily vehicle pre-trip inspections (fuel, tire pressure, coolant) and maintain cleanliness',
+      'Schedule periodic vehicle maintenance, annual inspections, and insurance renewals'
+    ],
+    requirements: [
+      'Valid driving license (heavy vehicle category is an added advantage)',
+      'Thorough knowledge of roads and routes in Vientiane Capital and surrounding provinces',
+      'Polite, punctual, calm demeanor with strict zero-alcohol policy on duty'
+    ]
+  },
+  'ops-02': {
+    title: 'Corporate Security Guard',
+    location: 'Headquarters',
+    responsibilities: [
+      'Patrol corporate entrances and headquarters building around the clock (24/7)',
+      'Record all visitor entries, deliveries, and vehicle movements at security checkpoints',
+      'Conduct nightly rounds verifying doors, windows, lighting, and fire safety gear'
+    ],
+    requirements: [
+      'Good physical fitness, clear vision, and clean background record',
+      'Honest, vigilant, alert, and dependable work ethic',
+      'Willingness and stamina to work rotating 12-hour day/night shifts'
+    ]
+  },
+  'ops-03': {
+    title: 'Mall Security Officer',
+    location: 'Thongkhankham Mall',
+    responsibilities: [
+      'Safeguard shoppers, vendors, and property within Thongkhankham Mall grounds',
+      'Direct motorcycle and car traffic in parking areas to keep entry lanes unobstructed',
+      'De-escalate disputes and handle security incidents calmly and professionally'
+    ],
+    requirements: [
+      'Physically fit and resilient in various weather conditions',
+      'Courteous and firm communication skills when assisting customers',
+      'Ready to work rotating shift schedules'
+    ]
+  },
+  'ops-04': {
+    title: 'Clean & Clear Facility Supervisor',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Enforce cleanliness standards across exhibition halls, meeting rooms, restrooms, and public foyers',
+      'Plan and execute pre-event and post-event deep cleaning cycles',
+      'Manage inventory of cleaning chemicals and janitorial machinery safely and cost-effectively'
+    ],
+    requirements: [
+      'Vocational diploma or higher in any field',
+      '1+ years of housekeeping or janitorial supervisory experience in hotels or commercial centers',
+      'Keen eye for detail, cleanliness enthusiast, with team leadership abilities'
+    ]
+  },
+  'ops-05': {
+    title: 'Food Court Cashier',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Issue and top up food court cash cards for exhibition attendees and visitors',
+      'Calculate totals, provide correct change, and process QR code and cash payments accurately',
+      'Reconcile daily card sales and submit cash funds to accounting promptly'
+    ],
+    requirements: [
+      'Vocational certificate or higher in Accounting, Finance, or related areas',
+      'High honesty, precision in financial transactions, and spotless financial record',
+      'Friendly customer greeting with quick calculation skills'
+    ]
+  },
+  'ops-06': {
+    title: 'Exhibition Booth Setup Technician',
+    location: 'Lao-ITECC',
+    responsibilities: [
+      'Assemble standard exhibition shell booths, aluminum modular partitions, and carpet flooring',
+      'Mount company fascia signage, spotlights, power sockets, and rental furniture for exhibitors',
+      'Dismantle, inspect, and organize booth structures back into storage after event closure'
+    ],
+    requirements: [
+      'Physically fit, comfortable with heights, able to lift heavy materials',
+      'Basic carpentry, painting, or electrical skills preferred',
+      'Good team player with willingness to work overtime during event setup phases'
+    ]
+  },
+  'ops-07': {
+    title: 'Food Court Cashier',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Staff the Food Court card counter at ITECC Mall issuing and recharging smart cards',
+      'Process card transactions, refund card deposits, and answer visitor questions',
+      'Perform cash drawer balancing and reconcile POS system sales records at shift end'
+    ],
+    requirements: [
+      'Vocational diploma in Accounting, Commerce, or Sales',
+      'High precision in cash handling and math calculations',
+      'Cheerful personality with dedicated customer service orientation'
+    ]
+  },
+  'ops-08': {
+    title: 'Landscape & Mall Decor Specialist',
+    location: 'ITECC Mall',
+    responsibilities: [
+      'Design and install festive mall decorations (Lao New Year, Christmas, Valentine’s, Halloween)',
+      'Maintain ornamental gardens, indoor greenery, water fountains, and photo opportunity spots',
+      'Repair and refresh decorative elements to keep the mall visually attractive at all times'
+    ],
+    requirements: [
+      'Creative artistic flair, love for aesthetic design, and handy crafts/carpentry skills',
+      'Comfortable working at heights and during night shifts when major installations take place',
+      'Responsible, reliable, and works collaboratively with creative teams'
+    ]
+  }
+};
+
+export function getJobTitle(job: Job, lang: LanguageType): string {
+  if (lang === 'en') {
+    return JOBS_EN_MAP[job.id]?.title || job.title;
+  }
+  return job.title;
+}
+
+export function getJobLocation(job: Job, lang: LanguageType): string {
+  if (lang === 'en') {
+    return JOBS_EN_MAP[job.id]?.location || job.location;
+  }
+  return job.location;
+}
+
+export function getJobType(job: Job, lang: LanguageType): string {
+  if (lang === 'lo') {
+    return job.type === 'Part-time' ? 'ນອກເວລາ' : 'ເຕັມເວລາ';
+  }
+  return job.type;
+}
+
+export function getJobResponsibilities(job: Job, lang: LanguageType): string[] {
+  if (lang === 'en') {
+    return JOBS_EN_MAP[job.id]?.responsibilities || job.responsibilities;
+  }
+  return job.responsibilities;
+}
+
+export function getJobRequirements(job: Job, lang: LanguageType): string[] {
+  if (lang === 'en') {
+    return JOBS_EN_MAP[job.id]?.requirements || job.requirements;
+  }
+  return job.requirements;
+}
+
+export function getCategoryTitle(catKey: string, lang: LanguageType): string {
+  const titles: Record<string, { lo: string; en: string }> = {
+    'cat-mgt': { lo: '1. ລະດັບບໍລິຫານ ແລະ ຫົວໜ້າ', en: '1. Management & Executives' },
+    'cat-it': { lo: '2. ໄອທີ, ສື່ ແລະ ຄວາມຄິດສ້າງສັນ', en: '2. IT, Creative & Media' },
+    'cat-mkt': { lo: '3. ການຕະຫຼາດ, ການຂາຍ ແລະ ປະຊາສຳພັນ', en: '3. Marketing & Sales' },
+    'cat-adm': { lo: '4. ການເງິນ, ນິຕິກຳ ແລະ ບໍລິຫານຫ້ອງການ', en: '4. Finance, Legal & Administration' },
+    'cat-ops': { lo: '5. ບໍລິການໜ້າຮ້ານ ແລະ ປະຕິບັດການທົ່ວໄປ', en: '5. Operations & Frontline Services' },
+  };
+  return titles[catKey] ? titles[catKey][lang] : catKey;
+}
+
 export const I18N = {
   lo: {
-    nav_jobs: 'ຕຳແໜ່ງງານ (Jobs)',
+    // Nav
+    nav_home: 'ໜ້າຫຼັກ',
+    nav_jobs: 'ຕຳແໜ່ງງານ',
     nav_tracker: 'ຕິດຕາມໃບສະໝັກ',
-    nav_talent: 'ຝາກ CV (Talent Pool)',
-    nav_about: 'ກ່ຽວກັບພວກເຮົາ (About)',
-    nav_contact: 'ຕິດຕໍ່ພວກເຮົາ (Contact)',
-    nav_saved: 'ວຽກທີ່ບັນທຶກໄວ້ (Saved Jobs)',
+    nav_talent: 'ຝາກ CV',
+    nav_about: 'ກ່ຽວກັບພວກເຮົາ',
+    nav_contact: 'ຕິດຕໍ່ພວກເຮົາ',
+    nav_saved: 'ວຽກທີ່ບັນທຶກໄວ້',
     btn_login: 'ເຂົ້າສູ່ລະບົບ',
     btn_signup: 'ລົງທະບຽນ',
+    btn_logout: 'ອອກຈາກລະບົບ',
     status_logged_in: '● ເຂົ້າສູ່ລະບົບແລ້ວ',
+
+    // Hero & Search
+    hero_title: 'ຮ່ວມງານກັບພວກເຮົາ - ບໍລິສັດ ລາວເວີລ ມະຫາຊົນ',
+    hero_subtitle: 'ເປີດຮັບສະໝັກບຸກຄະລາກອນທີ່ມີຄວາມຮູ້ຄວາມສາມາດ ເພື່ອເຕີບໂຕໄປພ້ອມກັບກຸ່ມບໍລິສັດ ລາວເວີລ',
     search_placeholder: 'ຄົ້ນຫາຕຳແໜ່ງງານ ຫຼື ສາຂາ...',
     tab_all: 'ທັງໝົດ (33)',
     tab_hq: 'ຫ້ອງການໃຫຍ່ (10)',
     tab_thong: 'ສູນການຄ້າທົ່ງຂັນຄຳ (5)',
     tab_exhibit: 'ລາວ-ໄອເຕັກ (9)',
     tab_mall: 'ໄອເຕັກມໍ (9)',
+    no_jobs_found: 'ບໍ່ພົບຕຳແໜ່ງງານທີ່ທ່ານຄົ້ນຫາ',
+    try_search_again: 'ລອງປ່ຽນຄຳສັບຄົ້ນຫາ ຫຼື ເລືອກ \'ທັງໝົດ\'',
+    job_status_open: 'ເປີດຮັບສະໝັກ',
+    job_deadline: 'ປິດຮັບ:',
     btn_details: 'ລາຍລະອຽດ',
     btn_easy_apply: 'ສະໝັກດ່ວນ',
-    saved_title: 'ວຽກທີ່ບັນທຶກໄວ້ (Saved Jobs)',
+
+    // Detail View
+    back_to_jobs: 'ກັບຄືນໜ້າຕຳແໜ່ງວຽກ',
+    breadcrumb_position: 'ຕຳແໜ່ງ >',
+    company_name_full: 'ບໍລິສັດ ລາວເວີລ ມະຫາຊົນ',
+    responsibilities_title: 'ໜ້າທີ່ຮັບຜິດຊອບ',
+    requirements_title: 'ຄຸນສົມບັດສະເພາະ',
+    benefits_title: 'ຜົນປະໂຫຍດ ແລະ ສະຫວັດດີການ',
+    benefit_social_security: 'ປະກັນສັງຄົມ ແລະ ປະກັນໄພສຸຂະພາບຕາມລະບຽບກົດໝາຍແຮງງານ',
+    benefit_bonus: 'ໂບນັດປະຈຳປີ ແລະ ເງິນລາງວັນຕາມຜົນງານ (KPI Bonus)',
+    benefit_leave: 'ວັນພັກປະຈຳປີ, ວັນພັກບຸນປະເພນີ ແລະ ວັນລາພັກພິເສດ',
+    benefit_training: 'ໂອກາດຝຶກອົບຮົມ ແລະ ເຕີບໂຕໃນສາຍອາຊີບກັບກຸ່ມບໍລິສັດ ລາວເວີລ',
+    summary_title: 'ຂໍ້ມູນສະຫຼຸບ',
+    label_facility: 'ສະຖານທີ່ປະຈຳການ:',
+    label_job_type: 'ປະເພດການຈ້າງ:',
+    label_salary: 'ເງິນເດືອນ:',
+    salary_structure: 'ອີງຕາມປະສົບການ & ໂຄງສ້າງ',
+    label_open_date: 'ວັນທີເປີດຮັບສະໝັກ:',
+    label_deadline: 'ວັນທີປິດຮັບສະໝັກ:',
+    label_status: 'ສະຖານະ:',
+    inquire_more: 'ຕ້ອງການສອບຖາມເພີ່ມເຕີມ?',
+    inquire_desc: 'ຕິດຕໍ່ຝ່າຍບຸກຄົນ: 021 415 555 ຫຼື ອີເມວ hr.careers@laoworld.la',
+
+    // Saved Jobs
+    saved_title: 'ວຽກທີ່ບັນທຶກໄວ້',
     saved_desc: 'ລາຍການຕຳແໜ່ງງານທີ່ທ່ານສົນໃຈ ແລະ ກົດບັນທຶກໄວ້ເບິ່ງພາຍຫຼັງ',
+    saved_empty_title: 'ຍັງບໍ່ມີຕຳແໜ່ງງານທີ່ບັນທຶກໄວ້',
+    saved_empty_desc: 'ກົດໄອຄອນຫົວໃຈຢູ່ບັດວຽກເພື່ອບັນທຶກໄວ້ທີ່ນີ້',
     btn_back_jobs: 'ກັບຄືນໜ້າຕຳແໜ່ງງານ',
-    talent_title: 'ຝາກ CV ໄວ້ລ່ວງໜ້າ (Join Talent Pool)',
+
+    // Tracker View
+    tracker_title: 'ຕິດຕາມສະຖານະໃບສະໝັກ',
+    tracker_desc: 'ກວດສອບຂັ້ນຕອນ ແລະ ຄວາມຄືບໜ້າຂອງຕຳແໜ່ງທີ່ທ່ານໄດ້ຍື່ນສະໝັກໄວ້ກັບ ລາວເວີລ ມະຫາຊົນ',
+    tracker_empty_title: 'ຍັງບໍ່ມີປະຫວັດການສະໝັກ',
+    tracker_empty_desc: 'ກະລຸນາເລືອກຕຳແໜ່ງ ແລະ ກົດ "ສະໝັກດ່ວນ" ເພື່ອສົ່ງໃບສະໝັກ',
+    app_id_label: 'ເລກທີໃບສະໝັກ:',
+    app_submitted_date: 'ຍື່ນເມື່ອ:',
+    step_submitted: '1. ຍື່ນແລ້ວ',
+    step_reviewing: '2. ກວດສອບ CV',
+    step_interview: '3. ສຳພາດ',
+    step_offer: '4. ຜົນການຄັດເລືອກ',
+
+    // Talent Pool
+    talent_badge: 'ຄັງບຸກຄະລາກອນ ລາວເວີລ',
+    talent_title: 'ຝາກ CV ໄວ້ລ່ວງໜ້າ',
     talent_desc: 'ຫາກຍັງບໍ່ທັນພົບຕຳແໜ່ງທີ່ກົງກັບຄວາມສາມາດຂອງທ່ານໃນຕອນນີ້, ສາມາດຝາກຊີວະປະຫວັດໄວ້ໃນຄັງບຸກຄະລາກອນຂອງ Lao World. ເມື່ອມີຕຳແໜ່ງໃໝ່ທີ່ເໝາະສົມ, ທີມງານ HR ຈະຕິດຕໍ່ທ່ານທັນທີ!',
-    contact_title: 'ຕິດຕໍ່ພະແນກສັນຫາບຸກຄະລາກອນ',
-    contact_desc: 'ມີຂໍ້ສົງໄສກ່ຽວກັບຕຳແໜ່ງວຽກ, ຂັ້ນຕອນການສຳພາດ, ຫຼື ຕ້ອງການສອບຖາມຂໍ້ມູນເພີ່ມເຕີມ ສາມາດຕິດຕໍ່ພວກເຮົາໄດ້ຜ່ານຊ່ອງທາງລຸ່ມນີ້:',
     label_fullname: 'ຊື່ ແລະ ນາມສະກຸນ',
     label_phone: 'ເບີໂທລະສັບ / WhatsApp',
     label_email: 'ອີເມວ',
     talent_pref_loc: 'ສາຂາທີ່ສະດວກປະຈຳການ',
     talent_field: 'ສາຍງານທີ່ທ່ານມີຄວາມຊຳນານ ຫຼື ສົນໃຈ',
-    talent_upload: 'ອັບໂຫຼດຊີວະປະຫວັດ (Upload CV/Resume)',
-    talent_notes: 'ຂໍ້ຄວາມສັ້ນໆແນະນຳຕົນເອງ (Cover Note)',
-    talent_submit_btn: 'ສົ່ງຂໍ້ມູນເຂົ້າ Talent Pool',
-    contact_send_msg: 'ຝາກຂໍ້ຄວາມສອບຖາມກັບຝ່າຍ HR'
+    talent_upload: 'ອັບໂຫຼດຊີວະປະຫວັດ (.pdf, .docx)',
+    talent_upload_drag: 'ຄລິກ ຫຼື ລາກໄຟລ໌ CV ມາວາງທີ່ນີ້',
+    talent_upload_hint: 'ຮອງຮັບໄຟລ໌ PDF, DOCX (ຂະໜາດບໍ່ເກີນ 10MB)',
+    talent_notes: 'ຂໍ້ຄວາມສັ້ນໆແນະນຳຕົນເອງ',
+    talent_notes_placeholder: 'ບອກພວກເຮົາສັ້ນໆກ່ຽວກັບປະສົບການ ແລະ ເປົ້າໝາຍອາຊີບຂອງທ່ານ...',
+    talent_submit_btn: 'ສົ່ງຂໍ້ມູນຊີວະປະຫວັດ',
+    talent_submitting: 'ກຳລັງສົ່ງຂໍ້ມູນ...',
+
+    // Contact
+    contact_badge: 'ຕິດຕໍ່ທີມງານສັນຫາບຸກຄະລາກອນ',
+    contact_title: 'ຕິດຕໍ່ພະແນກສັນຫາບຸກຄະລາກອນ',
+    contact_desc: 'ມີຂໍ້ສົງໄສກ່ຽວກັບຕຳແໜ່ງວຽກ, ຂັ້ນຕອນການສຳພາດ, ຫຼື ຕ້ອງການສອບຖາມຂໍ້ມູນເພີ່ມເຕີມ ສາມາດຕິດຕໍ່ພວກເຮົາໄດ້ຜ່ານຊ່ອງທາງລຸ່ມນີ້:',
+    card_hotline_title: 'ສາຍດ່ວນ HR',
+    card_hotline_sub: 'ຈັນ - ສຸກ: 08:30 - 17:30',
+    card_email_title: 'ອີເມວສັນຫາວຽກ',
+    card_email_sub: 'ສົ່ງ CV ໄດ້ຕະຫຼອດ 24 ຊມ',
+    card_hq_title: 'ຫ້ອງການໃຫຍ່',
+    card_hq_sub: 'ຖະໜົນກຳແພງເມືອງ, ບ້ານໂພນທັນ, ເມືອງໄຊເສດຖາ, ນະຄອນຫຼວງວຽງຈັນ',
+    card_social_title: 'WhatsApp / Page',
+    card_social_sub: 'ຕອບກັບພາຍໃນ 24 ຊົ່ວໂມງ',
+    contact_send_msg: 'ຝາກຂໍ້ຄວາມສອບຖາມກັບຝ່າຍ HR',
+    placeholder_fullname: 'ຊື່ ແລະ ນາມສະກຸນຂອງທ່ານ',
+    placeholder_phone: 'ເບີໂທລະສັບຕິດຕໍ່',
+    placeholder_subject: 'ຫົວຂໍ້ທີ່ຕ້ອງການສອບຖາມ...',
+    placeholder_msg: 'ພິມຂໍ້ຄວາມຂອງທ່ານທີ່ນີ້...',
+    btn_send_msg: 'ສົ່ງຂໍ້ຄວາມ',
+    facilities_title: '4 ສະຖານທີ່ປະຈຳການ',
+
+    // About
+    about_badge: 'ກ່ຽວກັບພວກເຮົາ',
+    about_title: 'ບໍລິສັດ ລາວເວີລ ມະຫາຊົນ',
+    about_slogan: '“Together, We create a world”',
+    about_desc: 'ບໍລິສັດ ລາວເວີລ ມະຫາຊົນ ເປັນກຸ່ມບໍລິສັດຊັ້ນນຳຂອງ ສປປ ລາວ ທີ່ດຳເນີນທຸລະກິດດ້ານການບໍລິຫານສູນການຄ້າ, ສູນວາງສະແດງສິນຄ້າລະດັບຊາດ ແລະ ສາກົນ, ສູນອາຫານ ແລະ ຄວາມບັນເທີງຄົບວົງຈອນ ພາຍໃຕ້ຄຳຂວັນ “Together, We create a world”.',
+
+    // Apply Modal
+    apply_modal_title: 'ສະໝັກດ່ວນ',
+    apply_step_1: '1. ຂໍ້ມູນສ່ວນຕົວ',
+    apply_step_2: '2. ອັບໂຫຼດຊີວະປະຫວັດ',
+    apply_step_3: '3. ສົ່ງໃບສະໝັກ',
+    apply_select_job: 'ເລືອກຕຳແໜ່ງງານທີ່ຕ້ອງການສະໝັກ',
+    apply_fullname_placeholder: 'ປ້ອນຊື່ ແລະ ນາມສະກຸນ',
+    apply_phone_placeholder: '020 xxxx xxxx',
+    apply_upload_title: 'ອັບໂຫຼດຊີວະປະຫວັດ (.pdf, .docx)',
+    apply_drag_text: 'ລາກ & ວາງໄຟລ໌',
+    apply_or_click: 'ຫຼື ຄລິກເພື່ອເລືອກໄຟລ໌ (.pdf, .docx)',
+    btn_cancel: 'ຍົກເລີກ',
+    btn_submit_apply: 'ສົ່ງໃບສະໝັກ',
+    apply_submitting: 'ກຳລັງສົ່ງ...',
+
+    // Auth
+    login_title: 'ເຂົ້າສູ່ລະບົບ',
+    login_subtitle: 'ເຂົ້າສູ່ລະບົບ ເພື່ອເບິ່ງວຽກທີ່ເໝາະກັບທັກສະຂອງທ່ານ ແລະ ສະໝັກວຽກໄດ້ທັນທີ',
+    login_tab_phone: 'ໃຊ້ເບີໂທລະສັບ',
+    login_tab_email: 'ໃຊ້ອີເມວ',
+    label_phone_num: 'ເບີໂທລະສັບ',
+    label_email_addr: 'ອີເມວ',
+    label_password: 'ລະຫັດຜ່ານ',
+    placeholder_phone_input: '5xxxxxxx',
+    placeholder_email_input: 'example@email.com',
+    placeholder_password: '••••••••',
+    btn_login_submit: 'ເຂົ້າສູ່ລະບົບ',
+    or_continue_with: 'ຫຼື ເຂົ້າສູ່ລະບົບດ້ວຍ',
+    no_account_yet: 'ຍັງບໍ່ມີບັນຊີ?',
+    btn_go_signup: 'ລົງທະບຽນໃໝ່',
+    signup_title: 'ລົງທະບຽນສະມາຊິກ',
+    signup_subtitle: 'ສ້າງບັນຊີໃໝ່ ເພື່ອບັນທຶກວຽກ, ຕິດຕາມໃບສະໝັກ ແລະ ຮັບການແຈ້ງເຕືອນວຽກໃໝ່',
+    signup_tab_phone: 'ລົງທະບຽນດ້ວຍເບີໂທ',
+    signup_tab_email: 'ລົງທະບຽນດ້ວຍອີເມວ',
+    btn_signup_submit: 'ລົງທະບຽນ',
+    have_account: 'ມີບັນຊີແລ້ວບໍ?',
+    btn_go_login: 'ເຂົ້າສູ່ລະບົບ',
+
+    // Footer
+    footer_company_desc: 'ກຸ່ມບໍລິສັດຊັ້ນນຳຂອງ ສປປ ລາວ ດ້ານການບໍລິຫານສູນການຄ້າ, ສູນວາງສະແດງສິນຄ້າລະດັບຊາດ-ສາກົນ, ສູນອາຫານ ແລະ ຄວາມບັນເທີງຄົບວົງຈອນ.',
+    footer_lsx: 'ບໍລິສັດຈົດທະບຽນໃນຕະຫຼາດຫຼັກຊັບລາວ (LSX)',
+    footer_facilities_title: 'ສາຂາປະຈຳການ (33 ຕຳແໜ່ງ)',
+    footer_quick_menu: 'ເມນູຫຼັກ',
+    footer_contact_title: 'ຕິດຕໍ່ພະແນກສັນຫາ',
+    footer_pos_count_10: '10 ຕຳແໜ່ງ',
+    footer_pos_count_5: '5 ຕຳແໜ່ງ',
+    footer_pos_count_9: '9 ຕຳແໜ່ງ',
+    footer_all_jobs: 'ຕຳແໜ່ງວຽກທັງໝົດ',
+    footer_talent: 'ຝາກ CV',
+    footer_about: 'ກ່ຽວກັບພວກເຮົາ',
+    footer_contact_hr: 'ຕິດຕໍ່ຝ່າຍບຸກຄົນ',
+    footer_hours_text: 'ວັນຈັນ - ວັນສຸກ (08:30 - 17:30)',
+    footer_hours_label: 'ໂມງການເຮັດວຽກ',
+    footer_copyright: 'ສະຫງວນລິຂະສິດທຸກປະການ.'
   },
   en: {
+    // Nav
+    nav_home: 'Home',
     nav_jobs: 'Jobs',
-    nav_tracker: 'Track Applications',
-    nav_talent: 'Talent Pool (Drop CV)',
+    nav_tracker: 'My Applications',
+    nav_talent: 'Talent Pool',
     nav_about: 'About Us',
     nav_contact: 'Contact Us',
     nav_saved: 'Saved Jobs',
     btn_login: 'Log In',
     btn_signup: 'Sign Up',
+    btn_logout: 'Log Out',
     status_logged_in: '● Logged In',
+
+    // Hero & Search
+    hero_title: 'Join Our Team - Lao World Public Company',
+    hero_subtitle: 'Explore career opportunities and grow your professional future with Lao World Public Company',
     search_placeholder: 'Search job title or location...',
     tab_all: 'All Jobs (33)',
     tab_hq: 'Headquarters (10)',
     tab_thong: 'Thongkhankham Mall (5)',
     tab_exhibit: 'Lao-ITECC Exhibit (9)',
     tab_mall: 'ITECC Mall (9)',
+    no_jobs_found: 'No open positions found',
+    try_search_again: 'Try different search keywords or select \'All Jobs\'',
+    job_status_open: 'Open',
+    job_deadline: 'Deadline:',
     btn_details: 'Details',
     btn_easy_apply: 'Easy Apply',
+
+    // Detail View
+    back_to_jobs: 'Back to Openings',
+    breadcrumb_position: 'Position >',
+    company_name_full: 'Lao World Public Company',
+    responsibilities_title: 'Key Responsibilities',
+    requirements_title: 'Qualifications & Requirements',
+    benefits_title: 'Benefits & Compensation',
+    benefit_social_security: 'Social security and health insurance in accordance with labor laws',
+    benefit_bonus: 'Annual bonus and performance-based incentive (KPI Bonus)',
+    benefit_leave: 'Annual paid leave, public holidays, and special leaves',
+    benefit_training: 'Continuous training programs and clear career advancement pathways',
+    summary_title: 'Job Summary',
+    label_facility: 'Facility / Location:',
+    label_job_type: 'Employment Type:',
+    label_salary: 'Salary:',
+    salary_structure: 'Competitive & based on experience',
+    label_open_date: 'Posted Date:',
+    label_deadline: 'Closing Date:',
+    label_status: 'Status:',
+    inquire_more: 'Have Questions?',
+    inquire_desc: 'Contact HR: +856 21 415 555 or email hr.careers@laoworld.la',
+
+    // Saved Jobs
     saved_title: 'Saved Jobs',
     saved_desc: 'Positions you bookmarked for later review and fast application',
+    saved_empty_title: 'No saved jobs yet',
+    saved_empty_desc: 'Click the heart icon on any job card to save it here',
     btn_back_jobs: 'Back to Openings',
-    talent_title: 'Join Our Talent Pool (Drop CV)',
+
+    // Tracker View
+    tracker_title: 'Application Status Tracker',
+    tracker_desc: 'Monitor the screening progress and status of your submitted applications at Lao World',
+    tracker_empty_title: 'No Applications Found',
+    tracker_empty_desc: 'Please browse available jobs and click "Easy Apply" to submit your application',
+    app_id_label: 'Application ID:',
+    app_submitted_date: 'Submitted on:',
+    step_submitted: '1. Submitted',
+    step_reviewing: '2. Screening CV',
+    step_interview: '3. Interview',
+    step_offer: '4. Decision / Offer',
+
+    // Talent Pool
+    talent_badge: 'Lao World Talent Network',
+    talent_title: 'Join Our Talent Pool',
     talent_desc: "Haven't found the right role yet? Leave your CV in our talent network. Our HR team will reach out as soon as matching openings appear!",
-    contact_title: 'Contact HR & Recruitment',
-    contact_desc: 'Have questions about open vacancies, application processes, or working at Lao World? Reach out through our direct channels:',
     label_fullname: 'Full Name',
     label_phone: 'Phone / WhatsApp',
     label_email: 'Email Address',
     talent_pref_loc: 'Preferred Facility',
-    talent_field: 'Functional Expertise / Interested Field',
+    talent_field: 'Functional Expertise / Field',
     talent_upload: 'Upload CV / Resume (.pdf, .docx)',
-    talent_notes: 'Brief Introduction / Cover Note',
-    talent_submit_btn: 'Submit to Talent Pool',
-    contact_send_msg: 'Send Message to HR Team'
+    talent_upload_drag: 'Click or drag & drop CV file here',
+    talent_upload_hint: 'Supports PDF, DOCX (up to 10MB)',
+    talent_notes: 'Cover Note / Brief Intro',
+    talent_notes_placeholder: 'Briefly introduce your background and career goals...',
+    talent_submit_btn: 'Submit CV to Talent Pool',
+    talent_submitting: 'Submitting...',
+
+    // Contact
+    contact_badge: 'Contact Recruitment Team',
+    contact_title: 'Contact HR & Recruitment',
+    contact_desc: 'Have questions about open vacancies, application processes, or working at Lao World? Reach out through our direct channels:',
+    card_hotline_title: 'HR Hotline',
+    card_hotline_sub: 'Mon - Fri: 08:30 - 17:30',
+    card_email_title: 'Recruitment Email',
+    card_email_sub: 'Accepting CVs 24/7',
+    card_hq_title: 'Headquarters',
+    card_hq_sub: 'Kamphengmeuang Rd, Phonthan Village, Xaysettha District, Vientiane Capital',
+    card_social_title: 'WhatsApp / Social Page',
+    card_social_sub: 'Response within 24 hours',
+    contact_send_msg: 'Send Message to HR Team',
+    placeholder_fullname: 'Your Full Name',
+    placeholder_phone: 'Contact Phone Number',
+    placeholder_subject: 'Subject (e.g. Inquire about IT Support role)',
+    placeholder_msg: 'Type your message here...',
+    btn_send_msg: 'Send Message',
+    facilities_title: '4 Operating Facilities',
+
+    // About
+    about_badge: 'About Us',
+    about_title: 'Lao World Public Company',
+    about_slogan: '“Together, We create a world”',
+    about_desc: 'Lao World Public Company is a leading corporate group in Lao PDR operating shopping mall management, national and international exhibition centers, food courts, and entertainment complexes under the motto “Together, We create a world”.',
+
+    // Apply Modal
+    apply_modal_title: 'Easy Apply',
+    apply_step_1: '1. Personal Info',
+    apply_step_2: '2. Upload Resume',
+    apply_step_3: '3. Submit',
+    apply_select_job: 'Select Position to Apply',
+    apply_fullname_placeholder: 'Enter your full name',
+    apply_phone_placeholder: '020 xxxx xxxx',
+    apply_upload_title: 'Upload Resume (.pdf, .docx)',
+    apply_drag_text: 'Drag & drop file',
+    apply_or_click: 'or click to browse (.pdf, .docx)',
+    btn_cancel: 'Cancel',
+    btn_submit_apply: 'Submit Application',
+    apply_submitting: 'Submitting...',
+
+    // Auth
+    login_title: 'Welcome Back',
+    login_subtitle: 'Sign in to discover positions matching your skills and apply immediately',
+    login_tab_phone: 'Use Phone Number',
+    login_tab_email: 'Use Email',
+    label_phone_num: 'Phone Number',
+    label_email_addr: 'Email Address',
+    label_password: 'Password',
+    placeholder_phone_input: '5xxxxxxx',
+    placeholder_email_input: 'example@email.com',
+    placeholder_password: '••••••••',
+    btn_login_submit: 'Log In',
+    or_continue_with: 'Or continue with',
+    no_account_yet: "Don't have an account?",
+    btn_go_signup: 'Create an Account',
+    signup_title: 'Create an Account',
+    signup_subtitle: 'Register to save jobs, track applications, and receive instant job alerts',
+    signup_tab_phone: 'Register with Phone',
+    signup_tab_email: 'Register with Email',
+    btn_signup_submit: 'Sign Up',
+    have_account: 'Already have an account?',
+    btn_go_login: 'Log In',
+
+    // Footer
+    footer_company_desc: "Lao PDR's leading corporate group in shopping mall management, national/international exhibition centers, food courts, and comprehensive entertainment.",
+    footer_lsx: 'Listed on the Lao Securities Exchange (LSX)',
+    footer_facilities_title: 'Operating Facilities (33 Openings)',
+    footer_quick_menu: 'Quick Links',
+    footer_contact_title: 'Contact Recruitment',
+    footer_pos_count_10: '10 Openings',
+    footer_pos_count_5: '5 Openings',
+    footer_pos_count_9: '9 Openings',
+    footer_all_jobs: 'All Job Openings',
+    footer_talent: 'Talent Pool (Drop CV)',
+    footer_about: 'About Lao World',
+    footer_contact_hr: 'Contact HR Team',
+    footer_hours_text: 'Monday - Friday (08:30 - 17:30)',
+    footer_hours_label: 'Office Hours',
+    footer_copyright: 'All rights reserved.'
   }
 };

@@ -1,7 +1,12 @@
 "use client";
 
 import React from "react";
-import { ALL_JOBS } from "@/data/jobsData";
+import {
+  ALL_JOBS,
+  LanguageType,
+  getJobTitle,
+  getJobLocation,
+} from "@/data/jobsData";
 import { X, UploadCloud } from "lucide-react";
 
 interface ApplyModalProps {
@@ -17,6 +22,7 @@ interface ApplyModalProps {
   setApplicantPhone: (phone: string) => void;
   isSubmitting: boolean;
   onSubmit: (e: React.FormEvent) => void;
+  currentLang?: LanguageType;
 }
 
 export default function ApplyModal({
@@ -32,6 +38,7 @@ export default function ApplyModal({
   setApplicantPhone,
   isSubmitting,
   onSubmit,
+  currentLang = "lo",
 }: ApplyModalProps) {
   if (!isOpen) return null;
 
@@ -44,10 +51,10 @@ export default function ApplyModal({
         <div className="flex items-center justify-between pb-3 border-b border-slate-700/80">
           <div>
             <h3 className="text-lg font-bold text-white">
-              Easy Apply / ສະໝັກດ່ວນ
+              {currentLang === "lo" ? "ສະໝັກດ່ວນ" : "Easy Apply"}
             </h3>
             <p className="text-xs text-slate-400 mt-0.5">
-              {currentJob?.title}
+              {currentJob ? getJobTitle(currentJob, currentLang) : ""}
             </p>
           </div>
           <button
@@ -61,11 +68,17 @@ export default function ApplyModal({
         {/* 3-Step Progress Bar */}
         <div className="py-3 border-b border-slate-700/80">
           <div className="flex items-center justify-between text-[11px] text-slate-300 font-medium mb-1.5">
-            <span className="text-blue-400 font-bold">1. Personal Info</span>
+            <span className="text-blue-400 font-bold">
+              {currentLang === "lo" ? "1. ຂໍ້ມູນສ່ວນຕົວ" : "1. Personal Info"}
+            </span>
             <span>&gt;</span>
-            <span className="text-slate-400">2. Upload Resume</span>
+            <span className="text-slate-400">
+              {currentLang === "lo" ? "2. ອັບໂຫຼດຊີວະປະຫວັດ" : "2. Upload Resume"}
+            </span>
             <span>&gt;</span>
-            <span className="text-slate-400">3. Submit</span>
+            <span className="text-slate-400">
+              {currentLang === "lo" ? "3. ສົ່ງໃບສະໝັກ" : "3. Submit"}
+            </span>
           </div>
           <div className="w-full bg-slate-700 h-1.5 rounded-full overflow-hidden">
             <div className="bg-blue-500 h-full w-1/3 rounded-full"></div>
@@ -79,7 +92,10 @@ export default function ApplyModal({
         >
           <div>
             <label className="block font-semibold mb-1 text-slate-300">
-              ເລືອກຕຳແໜ່ງງານທີ່ຕ້ອງການສະໝັກ <span className="text-rose-400">*</span>
+              {currentLang === "lo"
+                ? "ເລືອກຕຳແໜ່ງງານທີ່ຕ້ອງການສະໝັກ"
+                : "Select Position to Apply"}{" "}
+              <span className="text-rose-400">*</span>
             </label>
             <select
               value={jobId}
@@ -89,7 +105,7 @@ export default function ApplyModal({
             >
               {ALL_JOBS.map((j) => (
                 <option key={j.id} value={j.id}>
-                  [{j.location}] • {j.no}. {j.title}
+                  [{getJobLocation(j, currentLang)}] • {j.no}. {getJobTitle(j, currentLang)}
                 </option>
               ))}
             </select>
@@ -97,21 +113,23 @@ export default function ApplyModal({
 
           <div>
             <label className="block font-semibold mb-1 text-slate-300">
-              Full Name / ຊື່ ແລະ ນາມສະກຸນ <span className="text-rose-400">*</span>
+              {currentLang === "lo" ? "ຊື່ ແລະ ນາມສະກຸນ" : "Full Name"}{" "}
+              <span className="text-rose-400">*</span>
             </label>
             <input
               type="text"
               required
               value={applicantName}
               onChange={(e) => setApplicantName(e.target.value)}
-              placeholder="ປ້ອນຊື່ ແລະ ນາມສະກຸນ"
+              placeholder={currentLang === "lo" ? "ປ້ອນຊື່ ແລະ ນາມສະກຸນ" : "Enter your full name"}
               className="w-full px-3 py-2.5 bg-slate-800 border border-slate-700 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-blue-500 text-xs"
             />
           </div>
 
           <div>
             <label className="block font-semibold mb-1 text-slate-300">
-              Email / ອີເມວ <span className="text-rose-400">*</span>
+              {currentLang === "lo" ? "ອີເມວ" : "Email Address"}{" "}
+              <span className="text-rose-400">*</span>
             </label>
             <input
               type="email"
@@ -125,7 +143,8 @@ export default function ApplyModal({
 
           <div>
             <label className="block font-semibold mb-1 text-slate-300">
-              Phone Number / ເບີໂທລະສັບ <span className="text-rose-400">*</span>
+              {currentLang === "lo" ? "ເບີໂທລະສັບ" : "Phone Number"}{" "}
+              <span className="text-rose-400">*</span>
             </label>
             <input
               type="tel"
@@ -139,13 +158,19 @@ export default function ApplyModal({
 
           <div>
             <label className="block font-semibold mb-1 text-slate-300">
-              Upload Resume / ອັບໂຫຼດຊີວະປະຫວັດ (.pdf, .docx)
+              {currentLang === "lo"
+                ? "ອັບໂຫຼດຊີວະປະຫວັດ (.pdf, .docx)"
+                : "Upload Resume (.pdf, .docx)"}
             </label>
             <div className="border-2 border-dashed border-slate-600 bg-slate-800/80 rounded-xl p-4 text-center hover:bg-slate-800 transition cursor-pointer">
               <UploadCloud className="w-6 h-6 text-blue-400 mx-auto mb-1" />
-              <p className="font-bold text-white text-xs">Drag &amp; drop file</p>
+              <p className="font-bold text-white text-xs">
+                {currentLang === "lo" ? "ລາກ & ວາງໄຟລ໌ທີ່ນີ້" : "Drag & drop file here"}
+              </p>
               <p className="text-[10px] text-slate-400 mt-0.5">
-                ຫຼື ຄລິກເພື່ອເລືອກໄຟລ໌ (.pdf, .docx)
+                {currentLang === "lo"
+                  ? "ຫຼື ຄລິກເພື່ອເລືອກໄຟລ໌ (.pdf, .docx)"
+                  : "or click to browse (.pdf, .docx)"}
               </p>
             </div>
           </div>
@@ -156,7 +181,7 @@ export default function ApplyModal({
               onClick={onClose}
               className="w-1/2 py-2.5 bg-slate-700 hover:bg-slate-600 text-slate-200 font-bold rounded-xl transition text-xs"
             >
-              Cancel / ຍົກເລີກ
+              {currentLang === "lo" ? "ຍົກເລີກ" : "Cancel"}
             </button>
             <button
               type="submit"
@@ -164,7 +189,9 @@ export default function ApplyModal({
               className="w-1/2 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl transition text-xs shadow-sm flex items-center justify-center gap-1.5"
             >
               <span>
-                {isSubmitting ? "ກຳລັງສົ່ງ..." : "Submit Application"}
+                {isSubmitting
+                  ? (currentLang === "lo" ? "ກຳລັງສົ່ງ..." : "Submitting...")
+                  : (currentLang === "lo" ? "ສົ່ງໃບສະໝັກ" : "Submit Application")}
               </span>
             </button>
           </div>

@@ -1,22 +1,28 @@
 "use client";
 
 import React from "react";
-import { Application } from "@/data/jobsData";
+import { Application, LanguageType, I18N } from "@/data/jobsData";
 import { ClipboardList } from "lucide-react";
 
 interface TrackerViewProps {
   appliedJobs: Application[];
+  currentLang?: LanguageType;
+  t: (typeof I18N)["lo"];
 }
 
-export default function TrackerView({ appliedJobs }: TrackerViewProps) {
+export default function TrackerView({
+  appliedJobs,
+  currentLang = "lo",
+  t,
+}: TrackerViewProps) {
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6">
+    <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-6 animate-in fade-in duration-200">
       <div>
         <h1 className="text-2xl sm:text-3xl font-black text-slate-900">
-          ຕິດຕາມສະຖານະໃບສະໝັກ (Application Tracker)
+          {t.tracker_title}
         </h1>
         <p className="text-xs sm:text-sm text-slate-500 mt-1">
-          ກວດສອບຂັ້ນຕອນ ແລະ ຄວາມຄືບໜ້າຂອງຕຳແໜ່ງທີ່ທ່ານໄດ້ຍື່ນສະໝັກໄວ້ກັບ ລາວເວີລ ມະຫາຊົນ
+          {t.tracker_desc}
         </p>
       </div>
 
@@ -24,10 +30,10 @@ export default function TrackerView({ appliedJobs }: TrackerViewProps) {
         <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center text-slate-400">
           <ClipboardList className="w-12 h-12 mx-auto text-slate-300 mb-2" />
           <h3 className="text-sm font-bold text-slate-700">
-            ຍັງບໍ່ມີປະຫວັດການສະໝັກ
+            {t.tracker_empty_title}
           </h3>
           <p className="text-xs text-slate-400 mt-0.5">
-            ກະລຸນາເລືອກຕຳແໜ່ງ ແລະ ກົດ &quot;ສະໝັກດ່ວນ&quot; ເພື່ອສົ່ງໃບສະໝັກ
+            {t.tracker_empty_desc}
           </p>
         </div>
       ) : (
@@ -40,11 +46,11 @@ export default function TrackerView({ appliedJobs }: TrackerViewProps) {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                 <div>
                   <span className="text-[10px] font-mono text-slate-400">
-                    ເລກທີໃບສະໝັກ: {app.id}
+                    {t.app_id_label} {app.id}
                   </span>
                   <h3 className="text-base font-bold text-slate-900">{app.title}</h3>
                   <p className="text-xs text-slate-500">
-                    {app.location} • ຍື່ນເມື່ອ: {app.date}
+                    {app.location} • {t.app_submitted_date} {app.date}
                   </p>
                 </div>
                 <span className="px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-xs font-bold self-start sm:self-center">
@@ -56,25 +62,25 @@ export default function TrackerView({ appliedJobs }: TrackerViewProps) {
                 <div>
                   <div className="h-2 rounded-full bg-lw-blue"></div>
                   <span className="text-[10px] font-bold text-lw-blue mt-1 block">
-                    1. ຍື່ນແລ້ວ
+                    {t.step_submitted}
                   </span>
                 </div>
                 <div>
                   <div className="h-2 rounded-full bg-blue-200"></div>
                   <span className="text-[10px] text-slate-500 mt-1 block">
-                    2. ກວດສອບ
+                    {t.step_reviewing}
                   </span>
                 </div>
                 <div>
                   <div className="h-2 rounded-full bg-slate-100"></div>
                   <span className="text-[10px] text-slate-400 mt-1 block">
-                    3. ສຳພາດ
+                    {t.step_interview}
                   </span>
                 </div>
                 <div>
                   <div className="h-2 rounded-full bg-slate-100"></div>
                   <span className="text-[10px] text-slate-400 mt-1 block">
-                    4. ຜົນການຄັດເລືອກ
+                    {t.step_offer}
                   </span>
                 </div>
               </div>

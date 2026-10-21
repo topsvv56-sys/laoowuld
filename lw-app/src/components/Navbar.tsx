@@ -74,7 +74,7 @@ export default function Navbar({
               : "text-slate-700 hover:text-[#0070ba]"
               }`}
           >
-            {currentLang === "lo" ? "ໜ້າຫຼັກ (Home)" : "Home"}
+            {currentLang === "lo" ? "ໜ້າຫຼັກ" : "Home"}
           </button>
 
           <button
@@ -120,7 +120,7 @@ export default function Navbar({
               </span>
               <button
                 onClick={onLogout}
-                title="ອອກຈາກລະບົບ (Logout)"
+                title={currentLang === "lo" ? "ອອກຈາກລະບົບ" : "Logout"}
                 className="text-slate-400 hover:text-rose-500 p-1 rounded"
               >
                 <LogOut className="w-3.5 h-3.5" />
@@ -159,7 +159,7 @@ export default function Navbar({
               : "text-slate-700"
               }`}
           >
-            {currentLang === "lo" ? "ກ່ຽວກັບພວກເຮົາ (Company)" : "About Lao World"}
+            {currentLang === "lo" ? "ກ່ຽວກັບພວກເຮົາ" : "About Lao World"}
           </button>
 
           <button
@@ -169,7 +169,7 @@ export default function Navbar({
               : "text-slate-700"
               }`}
           >
-            {currentLang === "lo" ? "ຕິດຕໍ່ພວກເຮົາ (Contact)" : "Contact"}
+            {currentLang === "lo" ? "ຕິດຕໍ່ພວກເຮົາ" : "Contact"}
           </button>
 
           {currentUser && (
@@ -178,7 +178,7 @@ export default function Navbar({
                 onClick={onLogout}
                 className="w-full text-center py-2 text-rose-600 bg-rose-50 rounded-md text-xs font-bold"
               >
-                ອອກຈາກລະບົບ (Log Out)
+                {currentLang === "lo" ? "ອອກຈາກລະບົບ" : "Log Out"}
               </button>
             </div>
           )}
