@@ -207,7 +207,7 @@ export default function JobDetailView({
               </div>
 
               <div className="flex items-start gap-3">
-                <CalendarCheck className="w-4 h-4 text-rose-500 flex-shrink-0 mt-0.5" />
+                <CalendarCheck className="w-4 h-4 text-rose-500 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-slate-400 block text-[10px]">
                     {t.label_deadline}
@@ -219,7 +219,7 @@ export default function JobDetailView({
               </div>
 
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-4 h-4 text-emerald-500 flex-shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-4 h-4 text-emerald-500 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-slate-400 block text-[10px]">
                     {t.label_status}
