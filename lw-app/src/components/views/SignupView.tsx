@@ -177,7 +177,7 @@ export default function SignupView({
               {t.label_password} <span className="text-rose-500">*</span>
             </label>
             <div className="flex items-center rounded-2xl border border-slate-200 overflow-hidden focus-within:ring-2 focus-within:ring-lw-blue focus-within:border-lw-blue bg-white px-3 py-1">
-              <Lock className="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" />
+              <Lock className="w-4 h-4 text-slate-400 mr-2 shrink-0" />
               <input
                 type={showSignupPassword ? "text" : "password"}
                 required

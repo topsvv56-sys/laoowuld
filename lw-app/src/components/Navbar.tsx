@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { ViewType, LanguageType, UserProfile, I18N } from "@/data/jobsData";
 import {
   Menu,
@@ -52,15 +53,18 @@ export default function Navbar({
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 sm:h-[70px] flex items-center justify-between">
 
         {/* Left: Logo */}
-        <div className="flex items-center gap-3 sm:gap-4 flex-shrink-0">
+        <div className="flex items-center gap-3 sm:gap-4 shrink-0">
           <button
             onClick={() => handleNavClick("jobs")}
             className="flex items-center group py-1 text-left focus:outline-none hover:opacity-90 transition"
           >
-            <img
+            <Image
               src="/lao-world-logo-cropped.png"
               alt="Lao World Public Company"
+              width={160}
+              height={48}
               className="h-10 sm:h-12 w-auto object-contain"
+              priority
             />
           </button>
         </div>
@@ -99,7 +103,7 @@ export default function Navbar({
         </nav>
 
         {/* Right: Actions (Language Switcher Button & Mobile Menu) */}
-        <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           {/* Language Switcher */}
           <button
             onClick={toggleLanguage}

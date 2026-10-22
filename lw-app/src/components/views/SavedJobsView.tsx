@@ -82,10 +82,10 @@ export default function SavedJobsView({
 
                 <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 mb-3">
                   <span className="flex items-center gap-1 truncate max-w-[130px]">
-                    <MapPin className="w-3 h-3 text-slate-400 flex-shrink-0" />
+                    <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
                     <span className="truncate">{getJobLocation(job, currentLang)}</span>
                   </span>
-                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 flex-shrink-0">
+                  <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 shrink-0">
                     {getJobType(job, currentLang)}
                   </span>
                 </div>

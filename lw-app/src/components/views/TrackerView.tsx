@@ -12,7 +12,6 @@ interface TrackerViewProps {
 
 export default function TrackerView({
   appliedJobs,
-  currentLang = "lo",
   t,
 }: TrackerViewProps) {
   return (

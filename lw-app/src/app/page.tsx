@@ -72,6 +72,7 @@ export default function CareersPortal() {
   useEffect(() => {
     try {
       const storedSaved = localStorage.getItem("lw_saved_jobs");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (storedSaved) setSavedJobIds(JSON.parse(storedSaved));
 
       const storedApplied = localStorage.getItem("lw_applied_jobs");
@@ -410,7 +411,7 @@ export default function CareersPortal() {
             : "translate-y-20 opacity-0 pointer-events-none"
         }`}
       >
-        <CheckCircle className="w-5 h-5 text-emerald-400 flex-shrink-0" />
+        <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
         <span className="font-medium">{toast.message}</span>
       </div>
 

@@ -19,6 +19,7 @@ import {
   Megaphone,
   FileText,
   ConciergeBell,
+  Heart,
 } from "lucide-react";
 
 interface JobsViewProps {
@@ -79,7 +80,7 @@ export default function JobsView({
         </div>
 
         {/* Quick Search Input */}
-        <div className="relative w-full md:w-80 flex-shrink-0">
+        <div className="relative w-full md:w-80 shrink-0">
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
@@ -166,7 +167,7 @@ export default function JobsView({
               <div key={cat.key} className="space-y-3">
                 <div className="flex items-center gap-2.5 font-bold text-slate-900 text-sm sm:text-base border-b border-slate-200/80 pb-2">
                   <span
-                    className={`w-6 h-6 rounded-lg ${cat.color} flex items-center justify-center flex-shrink-0`}
+                    className={`w-6 h-6 rounded-lg ${cat.color} flex items-center justify-center shrink-0`}
                   >
                     {renderCategoryIcon(cat.icon)}
                   </span>
@@ -182,16 +183,30 @@ export default function JobsView({
                         className="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-2xs hover:shadow-xs hover:border-blue-300 transition flex flex-col justify-between"
                       >
                         <div>
-                          <h3 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
-                            {job.no}. {getJobTitle(job, currentLang)}
-                          </h3>
+                          <div className="flex items-start justify-between gap-1">
+                            <h3 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
+                              {job.no}. {getJobTitle(job, currentLang)}
+                            </h3>
+                            <button
+                              type="button"
+                              onClick={(e) => onToggleSave(job.id, e)}
+                              className={`p-1 rounded-lg transition shrink-0 ${
+                                isSaved
+                                  ? "text-rose-500 hover:text-rose-600 bg-rose-50"
+                                  : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
+                              }`}
+                              title={isSaved ? "Saved" : "Save job"}
+                            >
+                              <Heart className={`w-3.5 h-3.5 ${isSaved ? "fill-rose-500" : ""}`} />
+                            </button>
+                          </div>
 
                           <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 mb-2">
                             <span className="flex items-center gap-1 truncate max-w-[130px]">
-                              <MapPin className="w-3 h-3 text-slate-400 flex-shrink-0" />
+                              <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
                               <span className="truncate">{getJobLocation(job, currentLang)}</span>
                             </span>
-                            <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 flex-shrink-0">
+                            <span className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-slate-100 text-slate-600 shrink-0">
                               {getJobType(job, currentLang)}
                             </span>
                           </div>

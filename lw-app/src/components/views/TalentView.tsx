@@ -237,12 +237,24 @@ export default function TalentView({
               {targetJob ? (currentLang === "lo" ? "ຕຳແໜ່ງທີ່ສະໝັກ" : "Applying Position") : t.talent_field}
             </label>
             {targetJob ? (
-              <input
-                type="text"
-                readOnly
-                value={`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`}
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-800 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
-              />
+              <div className="relative">
+                <input
+                  type="text"
+                  readOnly
+                  value={`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`}
+                  className="w-full px-3.5 py-2.5 pr-10 border border-slate-200 rounded-xl bg-slate-50 text-slate-800 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
+                />
+                {onClearTargetJob && (
+                  <button
+                    type="button"
+                    onClick={onClearTargetJob}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-lg transition"
+                    title={currentLang === "lo" ? "ລຶບຕຳແໜ່ງ (ສະໝັກທົ່ວໄປ)" : "Clear position (General Application)"}
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                )}
+              </div>
             ) : (
               <select
                 value={talentCategory}
@@ -301,7 +313,7 @@ export default function TalentView({
             >
               {selectedFile ? (
                 <div className="flex items-center justify-center gap-2 text-emerald-700 font-bold text-xs bg-emerald-50 py-2.5 px-4 rounded-xl border border-emerald-200 max-w-md mx-auto">
-                  <CheckCircle2 className="w-4 h-4 text-emerald-600 flex-shrink-0" />
+                  <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   <span className="truncate">{selectedFile.name}</span>
                   <span className="text-[10px] text-emerald-600">
                     ({(selectedFile.size / 1024).toFixed(1)} KB)

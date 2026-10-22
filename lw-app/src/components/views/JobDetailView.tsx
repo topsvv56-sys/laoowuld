@@ -104,7 +104,7 @@ export default function JobDetailView({
             <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 pl-2">
               {responsibilities.map((r, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-lw-blue mt-2 flex-shrink-0"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-lw-blue mt-2 shrink-0"></span>
                   <span>{r}</span>
                 </li>
               ))}
@@ -120,7 +120,7 @@ export default function JobDetailView({
             <ul className="space-y-2.5 text-xs sm:text-sm text-slate-600 pl-2">
               {requirements.map((req, i) => (
                 <li key={i} className="flex items-start gap-2.5">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 flex-shrink-0"></span>
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 mt-2 shrink-0"></span>
                   <span>{req}</span>
                 </li>
               ))}
@@ -135,19 +135,19 @@ export default function JobDetailView({
             </h3>
             <ul className="space-y-2 text-xs sm:text-sm text-slate-600 pl-2">
               <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
                 <span>{t.benefit_social_security}</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
                 <span>{t.benefit_bonus}</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
                 <span>{t.benefit_leave}</span>
               </li>
               <li className="flex items-start gap-2.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 flex-shrink-0"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2 shrink-0"></span>
                 <span>{t.benefit_training}</span>
               </li>
             </ul>
@@ -163,7 +163,7 @@ export default function JobDetailView({
 
             <div className="space-y-3 text-xs">
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+                <MapPin className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-slate-400 block text-[10px]">
                     {t.label_facility}
@@ -173,7 +173,7 @@ export default function JobDetailView({
               </div>
 
               <div className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+                <Clock className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-slate-400 block text-[10px]">
                     {t.label_job_type}
@@ -183,7 +183,7 @@ export default function JobDetailView({
               </div>
 
               <div className="flex items-start gap-3">
-                <Banknote className="w-4 h-4 text-slate-400 flex-shrink-0 mt-0.5" />
+                <Banknote className="w-4 h-4 text-slate-400 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-slate-400 block text-[10px]">{t.label_salary}</span>
                   <span className="font-bold text-emerald-600">
@@ -195,7 +195,7 @@ export default function JobDetailView({
               <div className="pt-2 border-t border-slate-200/80"></div>
 
               <div className="flex items-start gap-3">
-                <Calendar className="w-4 h-4 text-blue-600 flex-shrink-0 mt-0.5" />
+                <Calendar className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
                 <div>
                   <span className="text-slate-400 block text-[10px]">
                     {t.label_open_date}
