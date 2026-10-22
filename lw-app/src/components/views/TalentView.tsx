@@ -52,6 +52,7 @@ export default function TalentView({
   // Sync with target job or logged in user
   useEffect(() => {
     if (targetJob) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setTalentLocation(getJobLocation(targetJob, currentLang));
       setTalentCategory(`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`);
     }

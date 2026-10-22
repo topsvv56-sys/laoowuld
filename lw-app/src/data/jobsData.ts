@@ -1118,7 +1118,7 @@ export const I18N = {
     card_email_sub: 'ສົ່ງ CV ໄດ້ຕະຫຼອດ 24 ຊມ',
     card_hq_title: 'ຫ້ອງການໃຫຍ່',
     card_hq_sub: 'ຖະໜົນກຳແພງເມືອງ, ບ້ານໂພນທັນ, ເມືອງໄຊເສດຖາ, ນະຄອນຫຼວງວຽງຈັນ',
-    card_social_title: 'WhatsApp / Page',
+    card_social_title: 'Facebook Page',
     card_social_sub: 'ຕອບກັບພາຍໃນ 24 ຊົ່ວໂມງ',
     contact_send_msg: 'ຝາກຂໍ້ຄວາມສອບຖາມກັບຝ່າຍ HR',
     placeholder_fullname: 'ຊື່ ແລະ ນາມສະກຸນຂອງທ່ານ',
@@ -1126,6 +1126,8 @@ export const I18N = {
     placeholder_subject: 'ຫົວຂໍ້ທີ່ຕ້ອງການສອບຖາມ...',
     placeholder_msg: 'ພິມຂໍ້ຄວາມຂອງທ່ານທີ່ນີ້...',
     btn_send_msg: 'ສົ່ງຂໍ້ຄວາມ',
+    btn_send_email: 'ສົ່ງຜ່ານ Email',
+    btn_send_whatsapp: 'ສົ່ງຜ່ານ WhatsApp',
     facilities_title: '4 ສະຖານທີ່ປະຈຳການ',
 
     // About
@@ -1187,7 +1189,12 @@ export const I18N = {
     footer_contact_hr: 'ຕິດຕໍ່ຝ່າຍບຸກຄົນ',
     footer_hours_text: 'ວັນຈັນ - ວັນສຸກ (08:30 - 17:30)',
     footer_hours_label: 'ໂມງການເຮັດວຽກ',
-    footer_copyright: 'ສະຫງວນລິຂະສິດທຸກປະການ.'
+    footer_copyright: 'ສະຫງວນລິຂະສິດທຸກປະການ.',
+    footer_developer: 'ພັດທະນາໂດຍ',
+    developer_name: 'Mr. Hannalong Savayvanh',
+    about_dev_title: 'ຜູ້ພັດທະນາລະບົບ',
+    about_dev_role: 'Full-Stack Developer & System Architecture',
+    about_dev_desc: 'ອອກແບບ ແລະ ພັດທະນາລະບົບຮັບສະໝັກງານອອນລາຍ Lao World Careers Portal'
   },
   en: {
     // Nav
@@ -1287,7 +1294,7 @@ export const I18N = {
     card_email_sub: 'Accepting CVs 24/7',
     card_hq_title: 'Headquarters',
     card_hq_sub: 'Kamphengmeuang Rd, Phonthan Village, Xaysettha District, Vientiane Capital',
-    card_social_title: 'WhatsApp / Social Page',
+    card_social_title: 'Facebook Page',
     card_social_sub: 'Response within 24 hours',
     contact_send_msg: 'Send Message to HR Team',
     placeholder_fullname: 'Your Full Name',
@@ -1295,6 +1302,8 @@ export const I18N = {
     placeholder_subject: 'Subject (e.g. Inquire about IT Support role)',
     placeholder_msg: 'Type your message here...',
     btn_send_msg: 'Send Message',
+    btn_send_email: 'Send via Email',
+    btn_send_whatsapp: 'Send via WhatsApp',
     facilities_title: '4 Operating Facilities',
 
     // About
@@ -1356,6 +1365,11 @@ export const I18N = {
     footer_contact_hr: 'Contact HR Team',
     footer_hours_text: 'Monday - Friday (08:30 - 17:30)',
     footer_hours_label: 'Office Hours',
-    footer_copyright: 'All rights reserved.'
+    footer_copyright: 'All rights reserved.',
+    footer_developer: 'Developed by',
+    developer_name: 'Mr. Hannalong Savayvanh',
+    about_dev_title: 'System Developer',
+    about_dev_role: 'Full-Stack Developer & System Architecture',
+    about_dev_desc: 'Designed & Developed the Lao World Careers Portal recruitment system'
   }
 };

@@ -12,6 +12,7 @@ import {
   ShieldCheck,
   Briefcase,
   Users,
+  Code2,
 } from "lucide-react";
 
 interface FooterProps {
@@ -185,9 +186,9 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
               <div className="flex items-start gap-2.5">
                 <PhoneCall className="w-4 h-4 text-[#0070ba] flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-800 block">
+                  <a href="tel:021415555" className="font-bold text-slate-800 hover:text-[#0070ba] transition block">
                     021 415 555 / 020 5551 2345
-                  </span>
+                  </a>
                   <span className="text-[10px] text-slate-400">{t.card_hotline_title}</span>
                 </div>
               </div>
@@ -195,10 +196,27 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
               <div className="flex items-start gap-2.5">
                 <Mail className="w-4 h-4 text-[#0070ba] flex-shrink-0 mt-0.5" />
                 <div>
-                  <span className="font-bold text-slate-800 block">
+                  <a href="mailto:hr.careers@laoworld.la" className="font-bold text-slate-800 hover:text-[#0070ba] transition block">
                     hr.careers@laoworld.la
-                  </span>
+                  </a>
                   <span className="text-[10px] text-slate-400">{t.card_email_title}</span>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-2.5">
+                <svg className="w-4 h-4 fill-[#1877F2] flex-shrink-0 mt-0.5" viewBox="0 0 24 24">
+                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                </svg>
+                <div>
+                  <a
+                    href="https://www.facebook.com/laoworldpublic/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-bold text-slate-800 hover:text-[#1877F2] transition block"
+                  >
+                    FB: Lao World Public Company
+                  </a>
+                  <span className="text-[10px] text-slate-400">{t.card_social_title}</span>
                 </div>
               </div>
 
@@ -226,9 +244,9 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
         </div>
       </div>
 
-      {/* Bottom Bar: Copyright */}
+      {/* Bottom Bar: Copyright & Developer Credit */}
       <div className="border-t border-slate-100 bg-slate-50/70 py-4 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left text-[11px] text-slate-500">
+        <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-3 text-center md:text-left text-[11px] text-slate-500">
           <div>
             <span>© 2026 </span>
             <span className="font-semibold text-slate-700">
@@ -237,8 +255,14 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
             <span> {t.footer_copyright}</span>
           </div>
 
-          <div className="flex items-center gap-4 text-slate-400">
-            <span className="inline-flex items-center gap-1.5 text-emerald-600 font-medium bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-100">
+          <div className="flex flex-wrap items-center justify-center md:justify-end gap-2.5">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white border border-slate-200/90 text-slate-700 shadow-2xs font-medium">
+              <Code2 className="w-3.5 h-3.5 text-[#0070ba]" />
+              <span className="text-slate-500">{t.footer_developer}:</span>
+              <span className="font-semibold text-slate-900">{t.developer_name}</span>
+            </span>
+
+            <span className="inline-flex items-center gap-1.5 text-emerald-600 font-medium bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-100">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
               {currentLang === "lo" ? "ລະບົບຮັບສະໝັກງານອອນລາຍ" : "Careers Portal Online"}
             </span>

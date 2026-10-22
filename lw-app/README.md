@@ -1,4 +1,11 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Lao World Careers Portal (ບໍລິສັດ ລາວເວີລ ມະຫາຊົນ)
+
+**Developer / ຜູ້ພັດທະນາ:** Mr. Hannalong Savayvanh  
+**Project:** Lao World Public Company - Careers & Recruitment Portal
+
+---
+
+This is a [Next.js](https://nextjs.org) project.
 
 ## Getting Started
 

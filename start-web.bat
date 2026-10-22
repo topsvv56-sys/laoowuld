@@ -2,6 +2,7 @@
 title Lao World Careers Portal
 echo ===================================================
 echo   Lao World Public Company - Careers Portal
+echo   Developer: Mr. Hannalong Savayvanh
 echo ===================================================
 echo Starting development server...
 cd /d "%~dp0lw-app"

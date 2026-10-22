@@ -35,11 +35,11 @@ export default function SignupView({
       );
       return;
     }
-    if (signupPassword.length < 6) {
+    if (signupPassword.length < 8) {
       showToast(
         currentLang === "lo"
-          ? "ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 6 ຕົວອັກສອນ"
-          : "Password must be at least 6 characters"
+          ? "ລະຫັດຜ່ານຕ້ອງມີຢ່າງໜ້ອຍ 8 ຕົວອັກສອນ"
+          : "Password must be at least 8 characters"
       );
       return;
     }

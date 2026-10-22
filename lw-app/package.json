@@ -1,6 +1,8 @@
 {
   "name": "lw-app",
   "version": "0.1.0",
+  "author": "Mr. Hannalong Savayvanh",
+  "description": "Lao World Public Company - Careers & Recruitment Portal",
   "private": true,
   "scripts": {
     "dev": "next dev",

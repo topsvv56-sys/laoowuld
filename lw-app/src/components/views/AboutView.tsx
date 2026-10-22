@@ -13,7 +13,7 @@ export default function AboutView({ currentLang = "lo" }: AboutViewProps) {
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-12 animate-in fade-in duration-200">
       <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="px-3.5 py-1 bg-blue-100 text-lw-blue rounded-full text-xs font-bold uppercase tracking-wider inline-block">
+        <span className="px-3.5 py-1 bg-blue-100 text-[#0070ba] rounded-full text-xs font-bold uppercase tracking-wider inline-block">
           {t.about_badge}
         </span>
         <h1 className="text-3xl sm:text-4xl font-black text-slate-900 tracking-tight">
@@ -26,7 +26,7 @@ export default function AboutView({ currentLang = "lo" }: AboutViewProps) {
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0070ba] flex items-center justify-center font-bold">
             01
           </div>
           <h3 className="text-base font-bold text-slate-900">
@@ -40,7 +40,7 @@ export default function AboutView({ currentLang = "lo" }: AboutViewProps) {
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0070ba] flex items-center justify-center font-bold">
             02
           </div>
           <h3 className="text-base font-bold text-slate-900">
@@ -54,7 +54,7 @@ export default function AboutView({ currentLang = "lo" }: AboutViewProps) {
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0070ba] flex items-center justify-center font-bold">
             03
           </div>
           <h3 className="text-base font-bold text-slate-900">
@@ -68,7 +68,7 @@ export default function AboutView({ currentLang = "lo" }: AboutViewProps) {
         </div>
 
         <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs space-y-2">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-lw-blue flex items-center justify-center font-bold">
+          <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0070ba] flex items-center justify-center font-bold">
             04
           </div>
           <h3 className="text-base font-bold text-slate-900">

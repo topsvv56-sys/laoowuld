@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import {
   ALL_JOBS,
   I18N,
@@ -65,6 +65,70 @@ export default function CareersPortal() {
       setToast({ message: "", visible: false });
     }, 3200);
   };
+
+  // Hydrate state from localStorage
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    try {
+      const storedSaved = localStorage.getItem("lw_saved_jobs");
+      if (storedSaved) setSavedJobIds(JSON.parse(storedSaved));
+
+      const storedApplied = localStorage.getItem("lw_applied_jobs");
+      if (storedApplied) setAppliedJobs(JSON.parse(storedApplied));
+
+      const storedUser = localStorage.getItem("lw_current_user");
+      if (storedUser) setCurrentUser(JSON.parse(storedUser));
+
+      const storedLang = localStorage.getItem("lw_lang");
+      if (storedLang === "lo" || storedLang === "en") setCurrentLang(storedLang);
+    } catch (e) {
+      console.error("Failed to load saved state:", e);
+    } finally {
+      setIsHydrated(true);
+    }
+  }, []);
+
+  // Save changes to localStorage once hydrated
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      localStorage.setItem("lw_saved_jobs", JSON.stringify(savedJobIds));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [savedJobIds, isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      localStorage.setItem("lw_applied_jobs", JSON.stringify(appliedJobs));
+    } catch (e) {
+      console.error(e);
+    }
+  }, [appliedJobs, isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      if (currentUser) {
+        localStorage.setItem("lw_current_user", JSON.stringify(currentUser));
+      } else {
+        localStorage.removeItem("lw_current_user");
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }, [currentUser, isHydrated]);
+
+  useEffect(() => {
+    if (!isHydrated) return;
+    try {
+      localStorage.setItem("lw_lang", currentLang);
+    } catch (e) {
+      console.error(e);
+    }
+  }, [currentLang, isHydrated]);
 
   const t = I18N[currentLang];
 
