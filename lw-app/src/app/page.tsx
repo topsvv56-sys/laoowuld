@@ -11,19 +11,16 @@ import {
   LanguageType,
   JOBS_EN_MAP,
   getJobTitle,
-  getJobLocation,
 } from "@/data/jobsData";
 import { CheckCircle } from "lucide-react";
 
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import ApplyModal from "@/components/ApplyModal";
 
 // Views
 import JobsView from "@/components/views/JobsView";
 import JobDetailView from "@/components/views/JobDetailView";
-import SavedJobsView from "@/components/views/SavedJobsView";
 import TrackerView from "@/components/views/TrackerView";
 import TalentView from "@/components/views/TalentView";
 import AboutView from "@/components/views/AboutView";
@@ -39,18 +36,12 @@ export default function CareersPortal() {
   const [currentLang, setCurrentLang] = useState<LanguageType>("lo");
 
   // User & Job State
-  const [savedJobIds, setSavedJobIds] = useState<string[]>([]);
   const [appliedJobs, setAppliedJobs] = useState<Application[]>([]);
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [currentDetailJobId, setCurrentDetailJobId] = useState<string>(ALL_JOBS[0].id);
 
-  // Apply Modal State
-  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
+  // Job Application Target
   const [applyModalJobId, setApplyModalJobId] = useState<string>(ALL_JOBS[0].id);
-  const [applicantName, setApplicantName] = useState("");
-  const [applicantEmail, setApplicantEmail] = useState("");
-  const [applicantPhone, setApplicantPhone] = useState("");
-  const [isSubmittingApply, setIsSubmittingApply] = useState(false);
   const [pendingJobIdAfterAuth, setPendingJobIdAfterAuth] = useState<string | null>(null);
 
   // Toast State
@@ -71,11 +62,8 @@ export default function CareersPortal() {
 
   useEffect(() => {
     try {
-      const storedSaved = localStorage.getItem("lw_saved_jobs");
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      if (storedSaved) setSavedJobIds(JSON.parse(storedSaved));
-
       const storedApplied = localStorage.getItem("lw_applied_jobs");
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       if (storedApplied) setAppliedJobs(JSON.parse(storedApplied));
 
       const storedUser = localStorage.getItem("lw_current_user");
@@ -91,15 +79,6 @@ export default function CareersPortal() {
   }, []);
 
   // Save changes to localStorage once hydrated
-  useEffect(() => {
-    if (!isHydrated) return;
-    try {
-      localStorage.setItem("lw_saved_jobs", JSON.stringify(savedJobIds));
-    } catch (e) {
-      console.error(e);
-    }
-  }, [savedJobIds, isHydrated]);
-
   useEffect(() => {
     if (!isHydrated) return;
     try {
@@ -156,39 +135,10 @@ export default function CareersPortal() {
     return ALL_JOBS.find((j) => j.id === currentDetailJobId) || ALL_JOBS[0];
   }, [currentDetailJobId]);
 
-  // Saved Jobs List
-  const savedJobs = useMemo(() => {
-    return ALL_JOBS.filter((j) => savedJobIds.includes(j.id));
-  }, [savedJobIds]);
-
   // Navigation Helper
   const navigateTo = (view: ViewType) => {
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
-  // Toggle Save Job
-  const toggleSaveJob = (jobId: string, e?: React.MouseEvent) => {
-    if (e) e.stopPropagation();
-    const job = ALL_JOBS.find((j) => j.id === jobId);
-    if (!job) return;
-
-    const title = getJobTitle(job, currentLang);
-    if (savedJobIds.includes(jobId)) {
-      setSavedJobIds((prev) => prev.filter((id) => id !== jobId));
-      showToast(
-        currentLang === "lo"
-          ? `ຍົກເລີກການບັນທຶກ ${title}`
-          : `Removed ${title} from saved`
-      );
-    } else {
-      setSavedJobIds((prev) => [...prev, jobId]);
-      showToast(
-        currentLang === "lo"
-          ? `ບັນທຶກຕຳແໜ່ງ ${title} ແລ້ວ!`
-          : `Saved ${title} to your bookmarks!`
-      );
-    }
   };
 
   // Open Apply (navigates to the Talent/Application page)
@@ -204,10 +154,7 @@ export default function CareersPortal() {
     if (pendingJobIdAfterAuth) {
       const targetJob = ALL_JOBS.find((j) => j.id === pendingJobIdAfterAuth);
       setApplyModalJobId(pendingJobIdAfterAuth);
-      setApplicantName(profile.name);
-      setApplicantEmail(profile.email);
-      setApplicantPhone(profile.phone);
-      setIsApplyModalOpen(true);
+      navigateTo("talent");
       setPendingJobIdAfterAuth(null);
       if (targetJob) {
         showToast(
@@ -217,42 +164,6 @@ export default function CareersPortal() {
         );
       }
     }
-  };
-
-  const closeApplyModal = () => {
-    setIsApplyModalOpen(false);
-  };
-
-  // Submit Job Application
-  const handleApplySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const job = ALL_JOBS.find((j) => j.id === applyModalJobId);
-    if (!job) return;
-
-    setIsSubmittingApply(true);
-    setTimeout(() => {
-      const newApp: Application = {
-        id: "LW-" + Math.floor(10000 + Math.random() * 90000),
-        title: getJobTitle(job, currentLang),
-        location: getJobLocation(job, currentLang),
-        candidateName: applicantName,
-        date: new Date().toLocaleDateString(currentLang === "lo" ? "lo-LA" : "en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric",
-        }),
-        status: currentLang === "lo" ? "HR ກຳລັງກວດສອບ CV" : "HR Screening CV",
-      };
-
-      setAppliedJobs((prev) => [newApp, ...prev]);
-      setIsSubmittingApply(false);
-      closeApplyModal();
-      showToast(
-        currentLang === "lo"
-          ? `ສົ່ງໃບສະໝັກຕຳແໜ່ງ ${getJobTitle(job, currentLang)} ສຳເລັດແລ້ວ!`
-          : `Application for ${getJobTitle(job, currentLang)} submitted successfully!`
-      );
-    }, 700);
   };
 
   // View details
@@ -275,7 +186,6 @@ export default function CareersPortal() {
         navigateTo={navigateTo}
         currentLang={currentLang}
         setCurrentLang={setCurrentLang}
-        savedCount={savedJobIds.length}
         appliedCount={appliedJobs.length}
         currentUser={currentUser}
         onLogout={handleLogout}
@@ -288,12 +198,10 @@ export default function CareersPortal() {
         {currentView === "jobs" && (
           <JobsView
             filteredJobs={filteredJobs}
-            savedJobIds={savedJobIds}
             currentLocFilter={currentLocFilter}
             setCurrentLocFilter={setCurrentLocFilter}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            onToggleSave={toggleSaveJob}
             onViewDetails={viewJobDetails}
             onOpenApplyModal={openApplyModal}
             currentLang={currentLang}
@@ -306,18 +214,6 @@ export default function CareersPortal() {
             job={selectedJob}
             onBack={() => navigateTo("jobs")}
             onOpenApplyModal={openApplyModal}
-            currentLang={currentLang}
-            t={t}
-          />
-        )}
-
-        {currentView === "saved" && (
-          <SavedJobsView
-            savedJobs={savedJobs}
-            onToggleSave={toggleSaveJob}
-            onViewDetails={viewJobDetails}
-            onOpenApplyModal={openApplyModal}
-            onBackToJobs={() => navigateTo("jobs")}
             currentLang={currentLang}
             t={t}
           />
@@ -385,23 +281,6 @@ export default function CareersPortal() {
           />
         )}
       </main>
-
-      {/* Easy Apply Modal */}
-      <ApplyModal
-        isOpen={isApplyModalOpen}
-        onClose={closeApplyModal}
-        jobId={applyModalJobId}
-        setJobId={setApplyModalJobId}
-        applicantName={applicantName}
-        setApplicantName={setApplicantName}
-        applicantEmail={applicantEmail}
-        setApplicantEmail={setApplicantEmail}
-        applicantPhone={applicantPhone}
-        setApplicantPhone={setApplicantPhone}
-        isSubmitting={isSubmittingApply}
-        onSubmit={handleApplySubmit}
-        currentLang={currentLang}
-      />
 
       {/* Toast Notification */}
       <div

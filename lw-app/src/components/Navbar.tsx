@@ -14,12 +14,11 @@ interface NavbarProps {
   navigateTo: (view: ViewType) => void;
   currentLang: LanguageType;
   setCurrentLang: (lang: LanguageType) => void;
-  savedCount: number;
-  appliedCount: number;
+  appliedCount?: number;
   currentUser: UserProfile | null;
   onLogout: () => void;
   showToast: (msg: string) => void;
-  t: (typeof I18N)["lo"];
+  t?: (typeof I18N)["lo"];
 }
 
 export default function Navbar({

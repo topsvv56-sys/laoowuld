@@ -23,12 +23,10 @@ import {
 
 interface JobsViewProps {
   filteredJobs: Job[];
-  savedJobIds?: string[];
   currentLocFilter: LocationFilter;
   setCurrentLocFilter: (loc: LocationFilter) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  onToggleSave?: (jobId: string, e?: React.MouseEvent) => void;
   onViewDetails: (jobId: string) => void;
   onOpenApplyModal: (jobId: string) => void;
   currentLang: LanguageType;
@@ -37,12 +35,10 @@ interface JobsViewProps {
 
 export default function JobsView({
   filteredJobs,
-  savedJobIds: _savedJobIds,
   currentLocFilter,
   setCurrentLocFilter,
   searchQuery,
   setSearchQuery,
-  onToggleSave: _onToggleSave,
   onViewDetails,
   onOpenApplyModal,
   currentLang,

@@ -38,7 +38,6 @@ export type ViewType =
   | "jobs"
   | "login"
   | "signup"
-  | "saved"
   | "talent"
   | "contact"
   | "detail"
