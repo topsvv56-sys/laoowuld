@@ -19,17 +19,16 @@ import {
   Megaphone,
   FileText,
   ConciergeBell,
-  Heart,
 } from "lucide-react";
 
 interface JobsViewProps {
   filteredJobs: Job[];
-  savedJobIds: string[];
+  savedJobIds?: string[];
   currentLocFilter: LocationFilter;
   setCurrentLocFilter: (loc: LocationFilter) => void;
   searchQuery: string;
   setSearchQuery: (query: string) => void;
-  onToggleSave: (jobId: string, e?: React.MouseEvent) => void;
+  onToggleSave?: (jobId: string, e?: React.MouseEvent) => void;
   onViewDetails: (jobId: string) => void;
   onOpenApplyModal: (jobId: string) => void;
   currentLang: LanguageType;
@@ -38,12 +37,12 @@ interface JobsViewProps {
 
 export default function JobsView({
   filteredJobs,
-  savedJobIds,
+  savedJobIds: _savedJobIds,
   currentLocFilter,
   setCurrentLocFilter,
   searchQuery,
   setSearchQuery,
-  onToggleSave,
+  onToggleSave: _onToggleSave,
   onViewDetails,
   onOpenApplyModal,
   currentLang,
@@ -176,33 +175,18 @@ export default function JobsView({
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3.5">
                   {jobsInCat.map((job) => {
-                    const isSaved = savedJobIds.includes(job.id);
                     return (
                       <div
                         key={job.id}
                         className="bg-white rounded-2xl border border-slate-200 p-3.5 shadow-2xs hover:shadow-xs hover:border-blue-300 transition flex flex-col justify-between"
                       >
                         <div>
-                          <div className="flex items-start justify-between gap-1">
-                            <h3 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
-                              {job.no}. {getJobTitle(job, currentLang)}
-                            </h3>
-                            <button
-                              type="button"
-                              onClick={(e) => onToggleSave(job.id, e)}
-                              className={`p-1 rounded-lg transition shrink-0 ${
-                                isSaved
-                                  ? "text-rose-500 hover:text-rose-600 bg-rose-50"
-                                  : "text-slate-400 hover:text-slate-600 hover:bg-slate-100"
-                              }`}
-                              title={isSaved ? "Saved" : "Save job"}
-                            >
-                              <Heart className={`w-3.5 h-3.5 ${isSaved ? "fill-rose-500" : ""}`} />
-                            </button>
-                          </div>
+                          <h3 className="text-xs font-bold text-slate-900 line-clamp-1 leading-snug">
+                            {job.no}. {getJobTitle(job, currentLang)}
+                          </h3>
 
                           <div className="flex items-center justify-between text-[11px] text-slate-500 mt-2 mb-2">
-                            <span className="flex items-center gap-1 truncate max-w-[130px]">
+                            <span className="flex items-center gap-1 truncate max-w-32.5">
                               <MapPin className="w-3 h-3 text-slate-400 shrink-0" />
                               <span className="truncate">{getJobLocation(job, currentLang)}</span>
                             </span>

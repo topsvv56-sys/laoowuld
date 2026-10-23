@@ -80,7 +80,7 @@ export default function SignupView({
 
   return (
     <div className="py-10 px-4 sm:px-6 animate-in fade-in duration-200">
-      <div className="max-w-[460px] mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
+      <div className="max-w-115 mx-auto bg-white rounded-3xl border border-slate-200/90 shadow-sm p-6 sm:p-8 space-y-6">
         <div className="text-center space-y-1.5">
           <h2 className="text-2xl font-black text-lw-blue tracking-tight">
             {t.signup_title}
