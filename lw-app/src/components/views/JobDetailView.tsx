@@ -70,7 +70,7 @@ export default function JobDetailView({
         </span>
       </div>
 
-      <div className="bg-white rounded-3xl border border-slate-200 p-6 sm:p-8 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-6 sm:p-8 shadow-xs grid grid-cols-1 lg:grid-cols-12 gap-8">
         {/* Left Details */}
         <div className="lg:col-span-8 space-y-6">
           <div>
@@ -156,7 +156,7 @@ export default function JobDetailView({
 
         {/* Right Sidebar */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-slate-50 rounded-2xl border border-slate-200 p-5 space-y-4">
+          <div className="bg-slate-50 dark:bg-zinc-950 rounded-2xl border border-slate-200 dark:border-zinc-800 p-5 space-y-4">
             <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
               {t.summary_title}
             </h3>

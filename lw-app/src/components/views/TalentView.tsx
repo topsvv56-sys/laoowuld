@@ -148,11 +148,11 @@ export default function TalentView({
         </p>
       </div>
 
-      <div className="bg-white rounded-3xl border border-slate-200/90 p-6 sm:p-8 shadow-sm">
+      <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200/90 dark:border-zinc-800 p-6 sm:p-8 shadow-sm">
         <form onSubmit={handleTalentSubmit} className="space-y-5 text-xs text-slate-700">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold mb-1.5">
+              <label className="block font-bold mb-1.5 text-slate-900 dark:text-zinc-200">
                 {t.label_fullname} <span className="text-rose-500">*</span>
               </label>
               <input
@@ -161,11 +161,11 @@ export default function TalentView({
                 value={talentFullName}
                 onChange={(e) => setTalentFullName(e.target.value)}
                 placeholder={currentLang === "lo" ? "ປ້ອນຊື່ ແລະ ນາມສະກຸນ" : "Enter your full name"}
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
+                className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 transition"
               />
             </div>
             <div>
-              <label className="block font-bold mb-1.5">
+              <label className="block font-bold mb-1.5 text-slate-900 dark:text-zinc-200">
                 {t.label_phone} <span className="text-rose-500">*</span>
               </label>
               <input
@@ -174,14 +174,14 @@ export default function TalentView({
                 value={talentPhone}
                 onChange={(e) => setTalentPhone(e.target.value)}
                 placeholder="020 xxxx xxxx"
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
+                className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 transition"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label className="block font-bold mb-1.5">
+              <label className="block font-bold mb-1.5 text-slate-900 dark:text-zinc-200">
                 {t.label_email} <span className="text-rose-500">*</span>
               </label>
               <input
@@ -190,11 +190,11 @@ export default function TalentView({
                 value={talentEmail}
                 onChange={(e) => setTalentEmail(e.target.value)}
                 placeholder="example@email.com"
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
+                className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 transition"
               />
             </div>
             <div>
-              <label className="block font-bold mb-1.5">
+              <label className="block font-bold mb-1.5 text-slate-900 dark:text-zinc-200">
                 {targetJob ? (currentLang === "lo" ? "ສາຂາປະຈຳການ" : "Facility") : t.talent_pref_loc}
               </label>
               {targetJob ? (
@@ -202,13 +202,13 @@ export default function TalentView({
                   type="text"
                   readOnly
                   value={getJobLocation(targetJob, currentLang)}
-                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl bg-slate-50 text-slate-800 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
+                  className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl bg-slate-50 dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
                 />
               ) : (
                 <select
                   value={talentLocation}
                   onChange={(e) => setTalentLocation(e.target.value)}
-                  className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
+                  className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 transition cursor-pointer"
                 >
                   {currentLang === "lo" ? (
                     <>
@@ -233,33 +233,21 @@ export default function TalentView({
           </div>
 
           <div>
-            <label className="block font-bold mb-1.5">
+            <label className="block font-bold mb-1.5 text-slate-900 dark:text-zinc-200">
               {targetJob ? (currentLang === "lo" ? "ຕຳແໜ່ງທີ່ສະໝັກ" : "Applying Position") : t.talent_field}
             </label>
             {targetJob ? (
-              <div className="relative">
-                <input
-                  type="text"
-                  readOnly
-                  value={`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`}
-                  className="w-full px-3.5 py-2.5 pr-10 border border-slate-200 rounded-xl bg-slate-50 text-slate-800 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
-                />
-                {onClearTargetJob && (
-                  <button
-                    type="button"
-                    onClick={onClearTargetJob}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1 text-slate-400 hover:text-slate-600 rounded-lg transition"
-                    title={currentLang === "lo" ? "ລຶບຕຳແໜ່ງ (ສະໝັກທົ່ວໄປ)" : "Clear position (General Application)"}
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                )}
-              </div>
+              <input
+                type="text"
+                readOnly
+                value={`${targetJob.no}. ${getJobTitle(targetJob, currentLang)}`}
+                className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl bg-slate-50 dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 font-medium focus:outline-none cursor-default select-none transition shadow-2xs"
+              />
             ) : (
               <select
                 value={talentCategory}
                 onChange={(e) => setTalentCategory(e.target.value)}
-                className="w-full px-3.5 py-2.5 border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white transition"
+                className="w-full px-3.5 py-2.5 border border-slate-200 dark:border-zinc-700 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#0070ba] bg-white dark:bg-zinc-800 text-slate-800 dark:text-zinc-100 transition cursor-pointer"
               >
                 {currentLang === "lo" ? (
                   <>

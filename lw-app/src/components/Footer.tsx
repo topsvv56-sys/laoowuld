@@ -25,7 +25,7 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
   const t = I18N[currentLang];
 
   return (
-    <footer className="bg-white border-t border-slate-200 mt-auto text-xs text-slate-600">
+    <footer className="bg-white dark:bg-black border-t border-slate-200 dark:border-zinc-800 mt-auto text-xs text-slate-600 dark:text-zinc-400 transition-colors duration-200">
       {/* Main Footer Content */}
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-8 lg:gap-10">
@@ -36,13 +36,15 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
               onClick={() => navigateTo("jobs")}
               className="flex items-center text-left focus:outline-none hover:opacity-90 transition"
             >
-              <Image
-                src="/lao-world-logo-cropped.png"
-                alt="Lao World Public Company"
-                width={180}
-                height={56}
-                className="h-12 sm:h-14 w-auto object-contain"
-              />
+              <div className="rounded-xl p-1 transition-all duration-200 dark:bg-white/95 dark:shadow-xs">
+                <Image
+                  src="/lao-world-logo-cropped.png"
+                  alt="Lao World Public Company"
+                  width={180}
+                  height={56}
+                  className="h-12 sm:h-14 w-auto object-contain transition-all duration-200"
+                />
+              </div>
             </button>
 
             <div className="space-y-1">
@@ -168,8 +170,26 @@ export default function Footer({ navigateTo, currentLang = "lo" }: FooterProps) 
               </li>
               <li>
                 <button
+                  onClick={() => navigateTo("services")}
+                  className="flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-[#0070ba] dark:hover:text-blue-400 transition py-1 group cursor-pointer"
+                >
+                  <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-[#0070ba] group-hover:translate-x-0.5 transition-transform" />
+                  <span>{currentLang === "lo" ? "ການບໍລິການຂອງພວກເຮົາ" : "Our Services"}</span>
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => navigateTo("regulations")}
+                  className="flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-[#0070ba] dark:hover:text-blue-400 transition py-1 group cursor-pointer"
+                >
+                  <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-[#0070ba] group-hover:translate-x-0.5 transition-transform" />
+                  <span>{currentLang === "lo" ? "ກົດລະບຽບ & ນະໂຍບາຍ" : "Regulations & Policies"}</span>
+                </button>
+              </li>
+              <li>
+                <button
                   onClick={() => navigateTo("contact")}
-                  className="flex items-center gap-1.5 text-slate-600 hover:text-[#0070ba] transition py-1 group"
+                  className="flex items-center gap-1.5 text-slate-600 dark:text-zinc-400 hover:text-[#0070ba] dark:hover:text-blue-400 transition py-1 group cursor-pointer"
                 >
                   <ChevronRight className="w-3 h-3 text-slate-400 group-hover:text-[#0070ba] group-hover:translate-x-0.5 transition-transform" />
                   <span>{t.footer_contact_hr}</span>

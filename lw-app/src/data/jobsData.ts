@@ -42,7 +42,9 @@ export type ViewType =
   | "contact"
   | "detail"
   | "tracker"
-  | "about";
+  | "about"
+  | "services"
+  | "regulations";
 
 export type LocationFilter =
   | "all"

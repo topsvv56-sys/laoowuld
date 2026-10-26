@@ -26,12 +26,12 @@ export default function TrackerView({
       </div>
 
       {appliedJobs.length === 0 ? (
-        <div className="bg-white rounded-3xl border border-slate-200 p-12 text-center text-slate-400">
-          <ClipboardList className="w-12 h-12 mx-auto text-slate-300 mb-2" />
-          <h3 className="text-sm font-bold text-slate-700">
+        <div className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-12 text-center text-slate-400 dark:text-zinc-500">
+          <ClipboardList className="w-12 h-12 mx-auto text-slate-300 dark:text-zinc-600 mb-2" />
+          <h3 className="text-sm font-bold text-slate-700 dark:text-zinc-300">
             {t.tracker_empty_title}
           </h3>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-400 dark:text-zinc-500 mt-0.5">
             {t.tracker_empty_desc}
           </p>
         </div>
@@ -40,7 +40,7 @@ export default function TrackerView({
           {appliedJobs.map((app) => (
             <div
               key={app.id}
-              className="bg-white rounded-3xl border border-slate-200 p-6 space-y-4 shadow-xs"
+              className="bg-white dark:bg-zinc-900 rounded-3xl border border-slate-200 dark:border-zinc-800 p-6 space-y-4 shadow-xs"
             >
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
                 <div>

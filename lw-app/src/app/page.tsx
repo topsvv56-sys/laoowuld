@@ -24,6 +24,8 @@ import JobDetailView from "@/components/views/JobDetailView";
 import TrackerView from "@/components/views/TrackerView";
 import TalentView from "@/components/views/TalentView";
 import AboutView from "@/components/views/AboutView";
+import ServicesView from "@/components/views/ServicesView";
+import RegulationsView from "@/components/views/RegulationsView";
 import ContactView from "@/components/views/ContactView";
 import LoginView from "@/components/views/LoginView";
 import SignupView from "@/components/views/SignupView";
@@ -34,6 +36,7 @@ export default function CareersPortal() {
   const [currentLocFilter, setCurrentLocFilter] = useState<LocationFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentLang, setCurrentLang] = useState<LanguageType>("lo");
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   // User & Job State
   const [appliedJobs, setAppliedJobs] = useState<Application[]>([]);
@@ -71,12 +74,55 @@ export default function CareersPortal() {
 
       const storedLang = localStorage.getItem("lw_lang");
       if (storedLang === "lo" || storedLang === "en") setCurrentLang(storedLang);
+
+      const storedTheme = localStorage.getItem("lw_theme");
+      if (storedTheme === "dark") {
+        setIsDarkMode(true);
+        document.documentElement.classList.add("dark");
+      } else if (storedTheme === "light") {
+        setIsDarkMode(false);
+        document.documentElement.classList.remove("dark");
+      } else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        setIsDarkMode(true);
+        document.documentElement.classList.add("dark");
+      }
     } catch (e) {
       console.error("Failed to load saved state:", e);
     } finally {
       setIsHydrated(true);
     }
   }, []);
+
+  // Toggle Black & White Dark Mode
+  const toggleDarkMode = () => {
+    const nextMode = !isDarkMode;
+    setIsDarkMode(nextMode);
+    if (nextMode) {
+      document.documentElement.classList.add("dark");
+      try {
+        localStorage.setItem("lw_theme", "dark");
+      } catch (e) {
+        console.error(e);
+      }
+      showToast(
+        currentLang === "lo"
+          ? "ປ່ຽນເປັນໂໝດມືດແລ້ວ (Dark Mode)"
+          : "Switched to Dark Mode"
+      );
+    } else {
+      document.documentElement.classList.remove("dark");
+      try {
+        localStorage.setItem("lw_theme", "light");
+      } catch (e) {
+        console.error(e);
+      }
+      showToast(
+        currentLang === "lo"
+          ? "ປ່ຽນເປັນໂໝດສະຫວ່າງແລ້ວ (Light Mode)"
+          : "Switched to Light Mode"
+      );
+    }
+  };
 
   // Save changes to localStorage once hydrated
   useEffect(() => {
@@ -179,7 +225,7 @@ export default function CareersPortal() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col font-sans text-slate-800 antialiased selection:bg-lw-blue selection:text-white bg-slate-50">
+    <div className="min-h-screen flex flex-col font-sans text-slate-800 dark:text-zinc-100 antialiased selection:bg-lw-blue selection:text-white bg-slate-50 dark:bg-black transition-colors duration-200">
       {/* Header / Navbar */}
       <Navbar
         currentView={currentView}
@@ -191,10 +237,12 @@ export default function CareersPortal() {
         onLogout={handleLogout}
         showToast={showToast}
         t={t}
+        isDarkMode={isDarkMode}
+        toggleDarkMode={toggleDarkMode}
       />
 
       {/* Main Views Container */}
-      <main className="flex-1">
+      <main className="flex-1 bg-transparent dark:bg-black">
         {currentView === "jobs" && (
           <JobsView
             filteredJobs={filteredJobs}
@@ -251,6 +299,22 @@ export default function CareersPortal() {
 
         {currentView === "about" && (
           <AboutView currentLang={currentLang} />
+        )}
+
+        {currentView === "services" && (
+          <ServicesView
+            currentLang={currentLang}
+            navigateTo={navigateTo}
+            showToast={showToast}
+          />
+        )}
+
+        {currentView === "regulations" && (
+          <RegulationsView
+            currentLang={currentLang}
+            navigateTo={navigateTo}
+            showToast={showToast}
+          />
         )}
 
         {currentView === "contact" && (

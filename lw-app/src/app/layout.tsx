@@ -12,8 +12,21 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="lo" className="h-full bg-slate-50">
-      <body className="h-full flex flex-col text-slate-800 antialiased selection:bg-[#0070ba] selection:text-white bg-slate-50">
+    <html lang="lo" suppressHydrationWarning className="h-full bg-slate-50 dark:bg-black transition-colors duration-200">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                if (localStorage.getItem('lw_theme') === 'dark') {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            `,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col text-slate-800 dark:text-zinc-100 antialiased selection:bg-[#0070ba] selection:text-white bg-slate-50 dark:bg-black transition-colors duration-200">
         {children}
       </body>
     </html>
